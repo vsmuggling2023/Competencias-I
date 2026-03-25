@@ -40,8 +40,8 @@ El sistema está compuesto por las siguientes entidades:
 ## 💾 Base de Datos (MySQL)
 
 ```sql
-CREATE DATABASE gestion_camiones;
-USE gestion_camiones;
+CREATE DATABASE hirata;
+USE hirata;
 
 -- TABLA USUARIOS
 CREATE TABLE usuarios (
