@@ -6,44 +6,45 @@ package vista;
 
 /**
  *
- * @author Mouli
+ * @author Santo Tomas
  */
-public class VistaUsuarios extends javax.swing.JFrame {
+public class VistaCamiones extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaUsuarios.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCamiones.class.getName());
 
     /**
-     * Creates new form VistaUsuarios
+     * Creates new form VistaCamiones
      */
-    public VistaUsuarios() {
+    public VistaCamiones() {
         initComponents();
-        cargarUsuarios();
+        cargarCamiones();
         setTitle("Gestión de Usuarios");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
     
-    private void cargarUsuarios() {
-        Dao.UsuariosDao dao = new Dao.UsuariosDao();
+    private void cargarCamiones() {
+        Dao.CamionesDao dao = new Dao.CamionesDao();
 
         // Llamamos al método (puedes pasar null porque no usas filtros)
-        java.util.List<modelo.Usuario> lista = dao.listarUsuario(null, null, null, null);
+        java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null, null);
 
         // Modelo de la tabla
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
         model.setRowCount(0); // limpiar tabla antes de cargar
 
-        for (modelo.Usuario u : lista) {
+        for (modelo.Camion c : lista) {
             model.addRow(new Object[]{
-                u.getId_usuario(),
-                u.getNombre(),
-                u.getEmail(),
-                u.getTipo_usuario()
+                c.getId_camion(),
+                c.getPatente(),
+                c.getMarca(),
+                c.getModelo(),
+                c.getAnio(),
+                c.getKilometro_acumulado()
             });
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,71 +54,78 @@ public class VistaUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setText("Modificar Camión");
+
+        jButton2.setText("Agregar Camión");
+
+        jButton3.setText("Eliminar Camión");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Correo", "Rol"
+                "id", "Patente", "Marca", "Modelo", "Año", "Kilometros Acumulado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("Modificar Usuario");
-
-        jButton2.setText("Agregar Usuario");
-
-        jButton3.setText("Eliminar Usuario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
                         .addComponent(jButton2)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(jButton3)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
                     .addComponent(jButton2)
+                    .addComponent(jButton1)
                     .addComponent(jButton3))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
