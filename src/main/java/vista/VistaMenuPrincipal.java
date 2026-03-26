@@ -4,6 +4,8 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mouli
@@ -53,6 +55,11 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Gestión de Conductores");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Gestión de Camiones");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +126,10 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         VistaCamiones vista = new VistaCamiones();
         vista.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       JOptionPane.showMessageDialog(this, "En construcción!", "No disponible", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CerrarSesion(){
         VistaLogin vista = new VistaLogin();
