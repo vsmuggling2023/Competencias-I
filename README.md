@@ -100,5 +100,5 @@ CREATE TABLE mantenimientos (
 ---
 
 PARA INSERTAR DATOS PARA EL USUARIO, PARA QUE TOME EL PROYECTO EN A BASE DE DATOS
-```
+```sql
 INSERT INTO usuarios (nombre, email, password, tipo_usuario) VALUES ("admin", "admin@admin.com", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", "ADMIN")
