@@ -12,6 +12,7 @@ import conn.Conexion;
 import java.security.MessageDigest;
 // Importa las clases necesarias de SQL
 import java.util.ArrayList;
+import modelo.Usuario;
 /**
  *
  * @author Mouli
@@ -106,20 +107,22 @@ public class VistaLogin extends javax.swing.JFrame {
     private void login() {
         String user = txtusuario.getText().trim();
         String password = new String(txtpassword.getPassword()).trim();
+
         if (user.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, rellena todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // --- CAMBIO AQUÍ: Usamos el DAO ---
         Dao.LoginDao dao = new Dao.LoginDao();
-        boolean esValido = dao.autenticar(user, password);
+        modelo.Usuario usuario = dao.autenticar(user, password);
 
-        if (esValido) {
-            // Usuario válido
+        if (usuario != null) {
             JOptionPane.showMessageDialog(this, "Acceso Exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            /*vista.setVisible(true);
-            this.dispose();*/
+
+            VistaMenuPrincipal vista = new VistaMenuPrincipal(usuario);
+            vista.setVisible(true);
+            this.dispose();
+
         } else {
             JOptionPane.showMessageDialog(this, "Revisa tus credenciales!", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
         }

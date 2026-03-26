@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import modelo.Usuario;
 
 /**
  *
@@ -41,23 +41,32 @@ public class LoginDao {
      * @param password La contraseña en texto plano (se encriptará aquí dentro).
      * @return true si las credenciales son válidas, false si no.
      */
-    public boolean autenticar(String usuario, String password) {
+    public Usuario autenticar(String usuario, String password) {
         String passHash = sha256(password);
         String sql = "SELECT * FROM usuarios WHERE nombre = ? AND password = ?";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, usuario);
             ps.setString(2, passHash);
 
             try (ResultSet rs = ps.executeQuery()) {
-                // Si rs.next() es true, significa que encontró un registro
-                return rs.next();
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId_usuario(rs.getInt("id_usuario"));
+                    u.setNombre(rs.getString("nombre"));
+                    u.setEmail(rs.getString("email"));
+                    u.setTipo_usuario(rs.getString("tipo_usuario"));
+                    return u;
+                } else {
+                    return null;
+                }
             }
 
         } catch (SQLException e) {
             System.out.println("Error SQL en LoginDao: " + e.getMessage());
-            return false;
+            return null;
         }
-    }    
+}  
 }
