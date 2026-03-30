@@ -68,31 +68,40 @@ public class CamionesDao {
         }
     }
 
-    // 3. Método para MODIFICAR un país
-    /*public boolean modificarPais(Pais pais, String codigoOriginal) {
-        String sql = "UPDATE country SET Code = ?, Name = ?, Continent = ?, Population = ? WHERE Code = ?";
+    public boolean modificarCamion(Camion camion) {
+        String sql = "UPDATE camiones SET patente = ?, marca = ?, modelo = ?, anio = ?, kilometraje_acumulado = ? WHERE id_camion = ?";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // AQUÍ TAMBIÉN CORREGIMOS
-            ps.setString(1, pais.getCode());
-            ps.setString(2, pais.getName());
-            ps.setString(3, pais.getContinent());
-
-            String pobTexto = pais.getPopulation().replace(".", "").replace(",", "").trim();
-            if (pobTexto.isEmpty()) {
-                ps.setInt(4, 0);
-            } else {
-                ps.setInt(4, Integer.parseInt(pobTexto));
-            }
-
-            ps.setString(5, codigoOriginal);
+            ps.setString(1, camion.getPatente());
+            ps.setString(2, camion.getMarca());
+            ps.setString(3, camion.getModelo());
+            ps.setInt(4, camion.getAnio());
+            ps.setFloat(5, camion.getKilometro_acumulado());
+            ps.setInt(6, camion.getId_camion());
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException | NumberFormatException e) {
-            System.err.println("Error al modificar país: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error al modificar el camión: " + e.getMessage());
             return false;
         }
-    }*/
+    }
+    
+    public boolean eliminarCamion(int id) {
+        String sql = "DELETE FROM camiones WHERE id_camion = ?";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el camión: " + e.getMessage());
+            return false;
+        }
+    }
 }

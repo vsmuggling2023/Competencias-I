@@ -33,28 +33,32 @@ public class VistaCamiones extends javax.swing.JFrame {
         txtkilometros.setVisible(false);
         btnactualizar.setVisible(false);
     }
+    private int idCamionSeleccionado = -1;
     
-    private void mostrarFormulario() {
+    private void mostrarFormulario(boolean esModificar) {
         jpatente.setVisible(true);
         jmarca.setVisible(true);
         jmodelo.setVisible(true);
         janio.setVisible(true);
-        jkilometros.setVisible(true);
 
         txtpatente.setVisible(true);
         txtmarca.setVisible(true);
         txtmodelo.setVisible(true);
         txtanio.setVisible(true);
-        
+
+        // 👇 SOLO en modificar
+        jkilometros.setVisible(esModificar);
+        txtkilometros.setVisible(esModificar);
 
         btnactualizar.setVisible(true);
 
-        // Limpiar campos
-        txtpatente.setText("");
-        txtmarca.setText("");
-        txtmodelo.setText("");
-        txtanio.setText("");
-        txtkilometros.setText("");
+        if (!esModificar) {
+            txtpatente.setText("");
+            txtmarca.setText("");
+            txtmodelo.setText("");
+            txtanio.setText("");
+            txtkilometros.setText("");
+        }
     }
     
     private void cargarCamiones() {
@@ -63,7 +67,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null);
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
-        model.setRowCount(0); // limpiar tabla antes de cargar
+        model.setRowCount(0);
 
         for (modelo.Camion c : lista) {
             model.addRow(new Object[]{
@@ -72,7 +76,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 c.getMarca(),
                 c.getModelo(),
                 c.getAnio(),
-                
+                c.getKilometro_acumulado()
             });
         }
     }
@@ -85,19 +89,35 @@ public class VistaCamiones extends javax.swing.JFrame {
             camion.setMarca(txtmarca.getText());
             camion.setModelo(txtmodelo.getText());
             camion.setAnio(Integer.parseInt(txtanio.getText()));
- 
 
             Dao.CamionesDao dao = new Dao.CamionesDao();
 
-            if (dao.agregarCamion(camion)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Camión agregado correctamente?");
-                cargarCamiones(); // refresca tabla
+            boolean resultado;
+
+            if (idCamionSeleccionado != -1) {
+                // MODIFICAR
+                camion.setId_camion(idCamionSeleccionado);
+                camion.setKilometro_acumulado(Float.parseFloat(txtkilometros.getText()));
+
+                resultado = dao.modificarCamion(camion);
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al agregar camión");
+                // AGREGAR (SIN kilometraje)
+                resultado = dao.agregarCamion(camion);
+            }
+
+            if (resultado) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
+                cargarCamiones();
+
+                idCamionSeleccionado = -1;
+                btnactualizar.setText("Actualizar");
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error en la operación");
             }
 
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos (revisa números)️");
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos️");
         }
     }
     /**
@@ -125,10 +145,16 @@ public class VistaCamiones extends javax.swing.JFrame {
         txtanio = new javax.swing.JTextField();
         txtkilometros = new javax.swing.JTextField();
         btnactualizar = new javax.swing.JButton();
+        btn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_modificarcamion.setText("Modificar Camión");
+        btn_modificarcamion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarcamionActionPerformed(evt);
+            }
+        });
 
         btn_agregarcamiones.setText("Agregar Camión");
         btn_agregarcamiones.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +200,13 @@ public class VistaCamiones extends javax.swing.JFrame {
             }
         });
 
+        btn_volver.setText("Volver");
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,7 +247,10 @@ public class VistaCamiones extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btn_modificarcamion)
                         .addGap(27, 27, 27)
-                        .addComponent(btn_eliminarcamion)))
+                        .addComponent(btn_eliminarcamion)
+                        .addGap(28, 28, 28)
+                        .addComponent(btn_volver)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
@@ -251,7 +287,8 @@ public class VistaCamiones extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_agregarcamiones)
                     .addComponent(btn_modificarcamion)
-                    .addComponent(btn_eliminarcamion))
+                    .addComponent(btn_eliminarcamion)
+                    .addComponent(btn_volver))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
@@ -259,16 +296,72 @@ public class VistaCamiones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_eliminarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarcamionActionPerformed
-        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero");
+            return;
+        }
+
+        int id = (int) jTable1.getValueAt(fila, 0);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Seguro que quieres eliminar este camión?",
+            "Confirmar eliminación",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        Dao.CamionesDao dao = new Dao.CamionesDao();
+
+        if (dao.eliminarCamion(id)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Camión eliminado correctamente");
+            cargarCamiones();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el camión");
+        }
     }//GEN-LAST:event_btn_eliminarcamionActionPerformed
 
     private void btn_agregarcamionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarcamionesActionPerformed
-        mostrarFormulario();
+        idCamionSeleccionado = -1;
+        mostrarFormulario(false);
+        btnactualizar.setText("Agregar Camión");
     }//GEN-LAST:event_btn_agregarcamionesActionPerformed
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         guardarCamion();
     }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void btn_modificarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarcamionActionPerformed
+        int fila = jTable1.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero");
+            return;
+        }
+
+        idCamionSeleccionado = (int) jTable1.getValueAt(fila, 0);
+
+        mostrarFormulario(true);
+
+        txtpatente.setText(jTable1.getValueAt(fila, 1).toString());
+        txtmarca.setText(jTable1.getValueAt(fila, 2).toString());
+        txtmodelo.setText(jTable1.getValueAt(fila, 3).toString());
+        txtanio.setText(jTable1.getValueAt(fila, 4).toString());
+        txtkilometros.setText(jTable1.getValueAt(fila, 5).toString());
+
+        btnactualizar.setText("Guardar Cambios");
+    }//GEN-LAST:event_btn_modificarcamionActionPerformed
+
+    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
+        VistaMenuPrincipal vista = new VistaMenuPrincipal();
+        vista.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,6 +372,7 @@ public class VistaCamiones extends javax.swing.JFrame {
     private javax.swing.JButton btn_agregarcamiones;
     private javax.swing.JButton btn_eliminarcamion;
     private javax.swing.JButton btn_modificarcamion;
+    private javax.swing.JButton btn_volver;
     private javax.swing.JButton btnactualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
