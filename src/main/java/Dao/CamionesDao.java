@@ -18,47 +18,12 @@ import java.util.List;
  */
 public class CamionesDao {
     public List<Camion> listarCamiones(Integer id, String patente, String marca,
-                                       String modelo, Integer anio, Integer kilometros) {
+                                       String modelo, Integer anio) {
         List<Camion> lista = new ArrayList<>();
         String sql = "SELECT id_camion, patente, marca, modelo, anio, kilometraje_acumulado FROM camiones";
         
         ArrayList<String> conditions = new ArrayList<>();
         ArrayList<Object> params = new ArrayList<>();
-
-        /*Filtro ID
-        if (idStr != null && !idStr.isEmpty() && !idStr.equals("Ingresa el ID")) {
-            try {
-                conditions.add("ID = ?");
-                params.add(Integer.parseInt(idStr));
-            } catch (NumberFormatException e) {}
-        }
-        // Filtro Nombre
-        if (nombre != null && !nombre.isEmpty() && !nombre.equals("Ingresa el nombre")) {
-            conditions.add("Name LIKE ?");
-            params.add("%" + nombre + "%");
-        }
-        // Filtro Distrito
-        if (distrito != null && !distrito.isEmpty() && !distrito.equals("Ingresa el Distrito")) {
-            conditions.add("District LIKE ?");
-            params.add("%" + distrito + "%");
-        }
-        // Filtro Código País
-        if (codigoPais != null && !codigoPais.isEmpty() && !codigoPais.equals("Ingresa el código de pais")) {
-            conditions.add("CountryCode LIKE ?");
-            params.add(codigoPais + "%");
-        }
-        // Filtro Población
-        if (poblacionStr != null && !poblacionStr.isEmpty() && !poblacionStr.equals("Ingresa la población")) {
-            try {
-                conditions.add("Population >= ?");
-                params.add(Integer.parseInt(poblacionStr));
-            } catch (NumberFormatException e) {}
-        }
-
-        if (!conditions.isEmpty()) {
-            sql += " WHERE " + String.join(" AND ", conditions);
-        }
-        sql += " LIMIT 100";*/
 
         try (Connection conn = Conexion.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -84,4 +49,50 @@ public class CamionesDao {
         }
         return lista;
     }
+    public boolean agregarCamion(Camion camion) {
+        String sql = "INSERT INTO camiones (patente, marca, modelo, anio) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, camion.getPatente());
+            ps.setString(2, camion.getMarca());
+            ps.setString(3, camion.getModelo());
+            ps.setInt(4, camion.getAnio());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al agregar el camión: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // 3. Método para MODIFICAR un país
+    /*public boolean modificarPais(Pais pais, String codigoOriginal) {
+        String sql = "UPDATE country SET Code = ?, Name = ?, Continent = ?, Population = ? WHERE Code = ?";
+
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            // AQUÍ TAMBIÉN CORREGIMOS
+            ps.setString(1, pais.getCode());
+            ps.setString(2, pais.getName());
+            ps.setString(3, pais.getContinent());
+
+            String pobTexto = pais.getPopulation().replace(".", "").replace(",", "").trim();
+            if (pobTexto.isEmpty()) {
+                ps.setInt(4, 0);
+            } else {
+                ps.setInt(4, Integer.parseInt(pobTexto));
+            }
+
+            ps.setString(5, codigoOriginal);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException | NumberFormatException e) {
+            System.err.println("Error al modificar país: " + e.getMessage());
+            return false;
+        }
+    }*/
 }
