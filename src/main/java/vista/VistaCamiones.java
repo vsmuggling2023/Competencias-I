@@ -18,7 +18,7 @@ public class VistaCamiones extends javax.swing.JFrame {
     public VistaCamiones() {
         initComponents();
         cargarCamiones();
-        setTitle("Gestión de Usuarios");
+        setTitle("Gestión de Camiones");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         jpatente.setVisible(false);

@@ -4,6 +4,9 @@
  */
 package vista;
 
+import Dao.CamionesDao;
+import modelo.Camion;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +29,22 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         setTitle("Menu Principal");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        verificarMantenimiento();
+    }
+    
+    private void verificarMantenimiento() {
+        CamionesDao dao = new CamionesDao();
+        List<Camion> camiones = dao.listarCamiones(null, null, null, null, null);
+
+        for (Camion c : camiones) {
+            if (c.getKilometro_acumulado() >= 5000) {
+                JOptionPane.showMessageDialog(this,
+                    "El camión con patente " + c.getPatente() + " con " + c.getKilometro_acumulado() + " necesita mantenimiento",
+                    "Alerta",
+                    JOptionPane.WARNING_MESSAGE
+                );
+            }
+        }
     }
 
     /**
