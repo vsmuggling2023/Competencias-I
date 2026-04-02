@@ -15,17 +15,20 @@ public class Camion {
     private String Modelo;
     private int Anio;
     private float Kilometro_acumulado;
-
+    public enum Estado{Disponible, Asignado, Mantenimiento}
+    
+    private Estado estado;
     public Camion() {
     }
 
-    public Camion(int id_camion, String Patente, String Marca, String Modelo, int Anio, float Kilometro_acumulado) {
+    public Camion(int id_camion, String Patente, String Marca, String Modelo, int Anio, float Kilometro_acumulado, Estado estado) {
         this.id_camion = id_camion;
         this.Patente = Patente;
         this.Marca = Marca;
         this.Modelo = Modelo;
         this.Anio = Anio;
         this.Kilometro_acumulado = Kilometro_acumulado;
+        this.estado = estado;
     }
 
     public int getId_camion() {
@@ -74,5 +77,13 @@ public class Camion {
 
     public void setKilometro_acumulado(float Kilometro_acumulado) {
         this.Kilometro_acumulado = Kilometro_acumulado;
+    }
+    
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
