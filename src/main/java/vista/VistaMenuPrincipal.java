@@ -20,8 +20,8 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form VistaMenuPrincipal
      */
-    public VistaMenuPrincipal() {
-        
+    public VistaMenuPrincipal(){
+        initComponents();
     }
     public VistaMenuPrincipal(modelo.Usuario usuario) {
         initComponents();
@@ -58,7 +58,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnConductores = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -73,10 +73,10 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Gestión de Conductores");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnConductores.setText("Gestión de Conductores");
+        btnConductores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnConductoresActionPerformed(evt);
             }
         });
 
@@ -111,7 +111,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(238, 238, 238)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
+                                    .addComponent(btnConductores)
                                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 295, Short.MAX_VALUE)))
@@ -127,7 +127,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addComponent(jButton3)
                 .addGap(115, 115, 115)
-                .addComponent(jButton2)
+                .addComponent(btnConductores)
                 .addGap(113, 113, 113)
                 .addComponent(jButton1)
                 .addContainerGap(271, Short.MAX_VALUE))
@@ -150,25 +150,37 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         vista.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       JOptionPane.showMessageDialog(this, "En construcción!", "No disponible", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnConductoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConductoresActionPerformed
+    try {
+            vista.VistaConductores ventana = new vista.VistaConductores();
+            ventana.setLocationRelativeTo(null);
+            ventana.setVisible(true);
+            this.dispose(); 
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnConductoresActionPerformed
 
     private void CerrarSesion(){
         VistaLogin vista = new VistaLogin();
         vista.setVisible(true); 
         this.dispose();
     }
+    
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConductores;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
+
+

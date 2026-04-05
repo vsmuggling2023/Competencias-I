@@ -8,7 +8,6 @@ import Dao.ConductorDao;
 import modelo.Conductor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import vista.VistaMenuPrincipal;
 
 
 /**
@@ -26,6 +25,19 @@ ConductorDao condDao = new ConductorDao();
         initComponents();
         txtId.setVisible(false);
         listar();
+        tablaConductores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int fila = tablaConductores.getSelectedRow();
+                if (fila != -1) {
+                    txtId.setText(tablaConductores.getValueAt(fila, 0).toString());
+                    txtRut.setText(tablaConductores.getValueAt(fila, 1).toString());
+                    txtNombre.setText(tablaConductores.getValueAt(fila, 2).toString());
+                    txtApellido.setText(tablaConductores.getValueAt(fila, 3).toString());
+                    txtLicencia.setText(tablaConductores.getValueAt(fila, 4).toString());
+                    txtTelefono.setText(tablaConductores.getValueAt(fila, 5).toString());
+                }
+            }
+        });
     }
 
     /**
@@ -113,8 +125,18 @@ ConductorDao condDao = new ConductorDao();
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -270,17 +292,61 @@ ConductorDao condDao = new ConductorDao();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-    try {
-        VistaMenuPrincipal menu = new VistaMenuPrincipal();
-        menu.setVisible(true);
-        this.dispose();
-    } catch (Exception e) {
-        System.out.println("Error al volver: " + e.getMessage());}
+        try {
+            vista.VistaMenuPrincipal menu = new vista.VistaMenuPrincipal();
+            menu.pack();
+            menu.setLocationRelativeTo(null);
+            menu.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
     limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    if (txtId.getText().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para modificar");
+    } else {
+        Conductor cond = new Conductor();
+        cond.setId_conductor(Integer.parseInt(txtId.getText()));
+        cond.setRut(txtRut.getText());
+        cond.setNombre(txtNombre.getText());
+        cond.setApellido(txtApellido.getText());
+        cond.setTipo_licencia(txtLicencia.getText());
+        cond.setTelefono(txtTelefono.getText());
+
+        if (condDao.modificarConductor(cond)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Conductor modificado con éxito");
+            limpiarCampos();
+            listar();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar");
+        }
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    if (txtId.getText().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para eliminar");
+    } else {
+        int pregunta = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este conductor?");
+        if (pregunta == 0) { // 0 significa que hizo clic en "SÍ"
+            int id = Integer.parseInt(txtId.getText());
+            if (condDao.eliminarConductor(id)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Conductor eliminado");
+                limpiarCampos();
+                listar();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar");
+            }
+        }
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,28 +383,7 @@ ConductorDao condDao = new ConductorDao();
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnVolver;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblApellido;
-    private javax.swing.JLabel lblLicencia;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblRut;
-    private javax.swing.JLabel lblTelefono;
-    private javax.swing.JTable tablaConductores;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtLicencia;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtRut;
-    private javax.swing.JTextField txtTelefono;
-    // End of variables declaration//GEN-END:variables
-
-public void listar() {
+    public void listar() {
         try {
             List<Conductor> lista = condDao.listarConductores();
             modeloTabla = (DefaultTableModel) tablaConductores.getModel();
@@ -367,4 +412,27 @@ public void listar() {
         txtLicencia.setText("");
         txtTelefono.setText("");
     }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblLicencia;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRut;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JTable tablaConductores;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtLicencia;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRut;
+    private javax.swing.JTextField txtTelefono;
+    // End of variables declaration//GEN-END:variables
 }
+
+
