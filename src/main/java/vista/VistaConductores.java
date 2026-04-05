@@ -8,6 +8,7 @@ import Dao.ConductorDao;
 import modelo.Conductor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import vista.VistaMenuPrincipal;
 
 
 /**
@@ -116,6 +117,11 @@ ConductorDao condDao = new ConductorDao();
         btnEliminar.setText("Eliminar");
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -264,10 +270,17 @@ ConductorDao condDao = new ConductorDao();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-    VistaMenuPrincipal menu = new VistaMenuPrincipal();
-menu.setVisible(true);
-this.dispose();
+    try {
+        VistaMenuPrincipal menu = new VistaMenuPrincipal();
+        menu.setVisible(true);
+        this.dispose();
+    } catch (Exception e) {
+        System.out.println("Error al volver: " + e.getMessage());}
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
