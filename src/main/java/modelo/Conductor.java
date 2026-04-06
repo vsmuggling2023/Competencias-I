@@ -7,17 +7,19 @@ public class Conductor {
     private String apellido;
     private String tipo_licencia;
     private String telefono;
+    private int id_camion;
 
     public Conductor() {
     }
 
-    public Conductor(int id_conductor, String rut, String nombre, String apellido, String tipo_licencia, String telefono) {
+    public Conductor(int id_conductor, String rut, String nombre, String apellido, String tipo_licencia, String telefono, int id_camion) {
         this.id_conductor = id_conductor;
         this.rut = rut;
         this.nombre = nombre;
         this.apellido = apellido;
         this.tipo_licencia = tipo_licencia;
         this.telefono = telefono;
+        this.id_camion = id_camion;
     }
 
     public int getId_conductor() {
@@ -67,4 +69,13 @@ public class Conductor {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    public int getId_camion() {
+        return id_camion;
+    }
+
+    public void setId_camion(int id_camion) {
+        this.id_camion = id_camion;
+    }
+
 }

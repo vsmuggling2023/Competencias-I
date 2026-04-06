@@ -4,44 +4,137 @@
  */
 package vista;
 
-import Dao.ConductorDao;
-import modelo.Conductor;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-
-
 /**
  *
- * @author kamcm
+ * @author Mouli
  */
 public class VistaConductores extends javax.swing.JFrame {
-ConductorDao condDao = new ConductorDao();
-    DefaultTableModel modeloTabla = new DefaultTableModel();
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaConductores.class.getName());
 
     /**
      * Creates new form VistaConductores
      */
     public VistaConductores() {
-        javax.swing.UIManager.put("OptionPane.yesButtonText", "Sí");
-        javax.swing.UIManager.put("OptionPane.noButtonText", "No");
-        javax.swing.UIManager.put("OptionPane.cancelButtonText", "Cancelar");
         initComponents();
-        txtId.setVisible(false);
-        listar();
-        tablaConductores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int fila = tablaConductores.getSelectedRow();
-                if (fila != -1) {
-                    txtId.setText(tablaConductores.getValueAt(fila, 0).toString());
-                    txtRut.setText(tablaConductores.getValueAt(fila, 1).toString());
-                    txtNombre.setText(tablaConductores.getValueAt(fila, 2).toString());
-                    txtApellido.setText(tablaConductores.getValueAt(fila, 3).toString());
-                    txtLicencia.setText(tablaConductores.getValueAt(fila, 4).toString());
-                    txtTelefono.setText(tablaConductores.getValueAt(fila, 5).toString());
-                }
-            }
-        });
+        cargarConductores();
+        setTitle("Gestión de Conductores");
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        lblRut.setVisible(false);
+        lblNombre.setVisible(false);
+        lblApellido.setVisible(false);
+        lblLicencia.setVisible(false);
+        lblTelefono.setVisible(false);
+        txtRut.setVisible(false);
+        txtNombre.setVisible(false);
+        txtApellido.setVisible(false);
+        txtLicencia.setVisible(false);
+        txtTelefono.setVisible(false);
+        lblcamionesdisponibles.setVisible(false);
+        jcamionesdisponibles.setVisible(false);
+        btnasignar.setVisible(false);
+        btnactualizar.setVisible(false);
     }
+    
+    private int idConductorSeleccionado = -1;
+    
+    private void mostrarFormulario(boolean esModificar) {
+        lblRut.setVisible(true);
+        lblNombre.setVisible(true);
+        lblApellido.setVisible(true);
+        lblLicencia.setVisible(true);
+        lblTelefono.setVisible(true);
+        txtRut.setVisible(true);
+        txtNombre.setVisible(true);
+        txtApellido.setVisible(true);
+        txtLicencia.setVisible(true);
+        txtTelefono.setVisible(true); 
+
+        btnactualizar.setVisible(true);
+
+        if (!esModificar) {
+            txtRut.setText("");
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtLicencia.setText("");
+            txtTelefono.setText("");
+        }
+    }
+    
+    private void cargarConductores() {
+        Dao.ConductorDao dao = new Dao.ConductorDao();
+
+        java.util.List<modelo.Conductor> lista = dao.listarConductores();
+
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (modelo.Conductor co : lista) {
+            model.addRow(new Object[]{
+                co.getId_conductor(),
+                co.getRut(),
+                co.getNombre(),
+                co.getApellido(),
+                co.getTipo_licencia(),
+                co.getTelefono(),
+                co.getId_camion()
+            });
+        }
+    }
+    
+    private void guardarConductor() {
+        try {
+            modelo.Conductor conductor = new modelo.Conductor();
+
+            conductor.setRut(txtRut.getText());
+            conductor.setNombre(txtNombre.getText());
+            conductor.setApellido(txtApellido.getText());
+            conductor.setTipo_licencia(txtLicencia.getText());
+            conductor.setTelefono(txtTelefono.getText());
+
+            Dao.ConductorDao dao = new Dao.ConductorDao();
+
+            boolean resultado;
+
+            if (idConductorSeleccionado != -1) {
+                // MODIFICAR
+                conductor.setId_conductor(idConductorSeleccionado);
+                resultado = dao.modificarConductor(conductor);
+            } else {
+                // AGREGAR
+                resultado = dao.agregarConductor(conductor);
+            }
+
+            if (resultado) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
+                cargarConductores();
+
+                idConductorSeleccionado = -1;
+                btnactualizar.setText("Guardar");
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error en la operación");
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos");
+        }
+    }
+    private void cargarCamionesCombo() {
+        lblcamionesdisponibles.setVisible(true);
+        jcamionesdisponibles.setVisible(true);
+        btnasignar.setVisible(true);
+        jcamionesdisponibles.removeAllItems();
+
+        Dao.CamionesDao dao = new Dao.CamionesDao();
+        java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null);
+
+        for (modelo.Camion c : lista) {
+            jcamionesdisponibles.addItem(c.getId_camion() + " - " + c.getPatente());
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,26 +145,43 @@ ConductorDao condDao = new ConductorDao();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        lblTelefono = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtRut = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtLicencia = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         lblRut = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
         lblLicencia = new javax.swing.JLabel();
-        lblTelefono = new javax.swing.JLabel();
-        txtRut = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtLicencia = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
-        btnGuardar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaConductores = new javax.swing.JTable();
+        btnactualizar = new javax.swing.JButton();
+        btnagregarconductor = new javax.swing.JButton();
+        btnmodificarconductor = new javax.swing.JButton();
+        btnasignarcamion = new javax.swing.JButton();
+        btneliminarcamion = new javax.swing.JButton();
+        lblcamionesdisponibles = new javax.swing.JLabel();
+        jcamionesdisponibles = new javax.swing.JComboBox<>();
+        btnasignar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "RUT", "Nombre", "Apellido", "Licencia", "Telefono", "Camión Asignado"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        lblTelefono.setText("Telefono");
 
         lblRut.setText("RUT");
 
@@ -81,359 +191,261 @@ ConductorDao condDao = new ConductorDao();
 
         lblLicencia.setText("Licencia");
 
-        lblTelefono.setText("Telefono");
-
-        txtRut.addActionListener(new java.awt.event.ActionListener() {
+        btnactualizar.setText("Actualizar");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRutActionPerformed(evt);
+                btnactualizarActionPerformed(evt);
             }
         });
 
-        txtApellido.addActionListener(new java.awt.event.ActionListener() {
+        btnagregarconductor.setText("Agregar Conductor");
+        btnagregarconductor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoActionPerformed(evt);
+                btnagregarconductorActionPerformed(evt);
             }
         });
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        btnmodificarconductor.setText("Modificar Conductor");
+        btnmodificarconductor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                btnmodificarconductorActionPerformed(evt);
             }
         });
 
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+        btnasignarcamion.setText("Asignar camión");
+        btnasignarcamion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
+                btnasignarcamionActionPerformed(evt);
             }
         });
 
-        txtLicencia.addActionListener(new java.awt.event.ActionListener() {
+        btneliminarcamion.setText("Eliminar Conductor");
+        btneliminarcamion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLicenciaActionPerformed(evt);
+                btneliminarcamionActionPerformed(evt);
             }
         });
 
-        txtId.setEditable(false);
-        txtId.addActionListener(new java.awt.event.ActionListener() {
+        lblcamionesdisponibles.setText("Camiones disponibles");
+
+        jcamionesdisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnasignar.setText("Asignar");
+        btnasignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
+                btnasignarActionPerformed(evt);
             }
         });
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
-
-        tablaConductores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "RUT", "Nombre", "Apellido", "Licencia", "Teléfono"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaConductores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblRut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblLicencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                            .addComponent(txtNombre)
-                            .addComponent(txtRut)
-                            .addComponent(txtLicencia)
-                            .addComponent(txtTelefono)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnVolver)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnGuardar)
-                                .addGap(108, 108, 108)
-                                .addComponent(btnModificar)
-                                .addGap(110, 110, 110)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnEliminar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnLimpiar)))))))
-                .addContainerGap(162, Short.MAX_VALUE))
+                        .addGap(105, 105, 105)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombre)
+                            .addComponent(lblRut)
+                            .addComponent(lblApellido)
+                            .addComponent(lblLicencia)
+                            .addComponent(lblTelefono)
+                            .addComponent(lblcamionesdisponibles))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtLicencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcamionesdisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtRut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(169, 169, 169))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnasignar)
+                            .addComponent(btnactualizar))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(btnagregarconductor)
+                .addGap(18, 18, 18)
+                .addComponent(btnmodificarconductor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnasignarcamion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btneliminarcamion)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(btnVolver)
-                .addGap(8, 8, 8)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnagregarconductor)
+                            .addComponent(btnmodificarconductor)
+                            .addComponent(btnasignarcamion)
+                            .addComponent(btneliminarcamion)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRut))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNombre))
-                        .addGap(18, 18, 18)
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblApellido))
-                        .addGap(18, 18, 18)
+                            .addComponent(lblApellido)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblLicencia))
-                        .addGap(18, 18, 18)
+                            .addComponent(lblLicencia)
+                            .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTelefono)))
-                    .addComponent(lblRut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar))
-                .addGap(17, 17, 17)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTelefono)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnactualizar)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblcamionesdisponibles)
+                            .addComponent(jcamionesdisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnasignar)))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRutActionPerformed
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        guardarConductor();
+    }//GEN-LAST:event_btnactualizarActionPerformed
 
-    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoActionPerformed
+    private void btnagregarconductorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarconductorActionPerformed
+       idConductorSeleccionado = -1;
+       mostrarFormulario(false);
+       btnactualizar.setText("Agregar Camión");
+    }//GEN-LAST:event_btnagregarconductorActionPerformed
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
+    private void btnasignarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignarcamionActionPerformed
+        cargarCamionesCombo();
+    }//GEN-LAST:event_btnasignarcamionActionPerformed
 
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
+    private void btnasignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignarActionPerformed
+       int fila = jTable1.getSelectedRow();
 
-    private void txtLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLicenciaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLicenciaActionPerformed
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    if (txtRut.getText().isEmpty() || txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Debe completar los campos obligatorios");
-} else {
-    Conductor cond = new Conductor();
-    cond.setRut(txtRut.getText());
-    cond.setNombre(txtNombre.getText());
-    cond.setApellido(txtApellido.getText());
-    cond.setTipo_licencia(txtLicencia.getText());
-    cond.setTelefono(txtTelefono.getText());
-
-    if (condDao.agregarConductor(cond)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Conductor registrado con éxito");
-        limpiarCampos();
-        listar();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar el conductor");
-    }
-}
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        try {
-            vista.VistaMenuPrincipal menu = new vista.VistaMenuPrincipal();
-            menu.pack();
-            menu.setLocationRelativeTo(null);
-            menu.setVisible(true);
-            this.dispose();
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un conductor");
+            return;
         }
-    
-    }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    limpiarCampos();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+        int idConductor = (int) jTable1.getValueAt(fila, 0);
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    if (txtId.getText().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para modificar");
-    } else {
-        Conductor cond = new Conductor();
-        cond.setId_conductor(Integer.parseInt(txtId.getText()));
-        cond.setRut(txtRut.getText());
-        cond.setNombre(txtNombre.getText());
-        cond.setApellido(txtApellido.getText());
-        cond.setTipo_licencia(txtLicencia.getText());
-        cond.setTelefono(txtTelefono.getText());
+        // Obtener ID del camión desde el combo
+        String seleccionado = jcamionesdisponibles.getSelectedItem().toString();
+        int idCamion = Integer.parseInt(seleccionado.split(" - ")[0]);
 
-        if (condDao.modificarConductor(cond)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Conductor modificado con éxito");
-            limpiarCampos();
-            listar();
+        Dao.ConductorDao dao = new Dao.ConductorDao();
+        boolean resultado = dao.asignarCamion(idConductor, idCamion);
+
+        if (resultado) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Camión asignado correctamente");
+            cargarConductores();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar");
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al asignar camión");
         }
-    }
-    }//GEN-LAST:event_btnModificarActionPerformed
+        lblcamionesdisponibles.setVisible(false);
+        jcamionesdisponibles.setVisible(false);
+        btnasignar.setVisible(false);
+    }//GEN-LAST:event_btnasignarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    if (txtId.getText().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para eliminar");
-    } else {
-        int pregunta = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este conductor?");
-        if (pregunta == 0) { // 0 significa que hizo clic en "SÍ"
-            int id = Integer.parseInt(txtId.getText());
-            if (condDao.eliminarConductor(id)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Conductor eliminado");
-                limpiarCampos();
-                listar();
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar");
-            }
+    private void btnmodificarconductorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarconductorActionPerformed
+       int fila = jTable1.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero");
+            return;
         }
-    }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+
+        idConductorSeleccionado = (int) jTable1.getValueAt(fila, 0);
+
+        mostrarFormulario(true);
+
+        txtRut.setText(jTable1.getValueAt(fila, 1).toString());
+        txtNombre.setText(jTable1.getValueAt(fila, 2).toString());
+        txtApellido.setText(jTable1.getValueAt(fila, 3).toString());
+        txtLicencia.setText(jTable1.getValueAt(fila, 4).toString());
+        txtTelefono.setText(jTable1.getValueAt(fila, 5).toString());
+
+        btnactualizar.setText("Guardar Cambios");
+    }//GEN-LAST:event_btnmodificarconductorActionPerformed
+
+    private void btneliminarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarcamionActionPerformed
+        int fila = jTable1.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un conductor primero");
+            return;
+        }
+
+        int id = (int) jTable1.getValueAt(fila, 0);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que quieres eliminar este conductor?",
+                "Confirmar eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        Dao.ConductorDao dao = new Dao.ConductorDao();
+
+        if (dao.eliminarConductor(id)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Conductor eliminado correctamente");
+            cargarConductores();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el camión");
+        }
+    }//GEN-LAST:event_btneliminarcamionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaConductores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaConductores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaConductores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaConductores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VistaConductores().setVisible(true);
-            }
-        });
-    }
-
-    public void listar() {
-        try {
-            List<Conductor> lista = condDao.listarConductores();
-            modeloTabla = (DefaultTableModel) tablaConductores.getModel();
-            modeloTabla.setRowCount(0);
-            Object[] ob = new Object[6];
-            for (int i = 0; i < lista.size(); i++) {
-                ob[0] = lista.get(i).getId_conductor();
-                ob[1] = lista.get(i).getRut();
-                ob[2] = lista.get(i).getNombre();
-                ob[3] = lista.get(i).getApellido();
-                ob[4] = lista.get(i).getTipo_licencia();
-                ob[5] = lista.get(i).getTelefono();
-                modeloTabla.addRow(ob);
-            }
-            tablaConductores.setModel(modeloTabla);
-        } catch (Exception e) {
-            System.out.println("Error al listar: " + e.getMessage());
-        }
-    }
-
-    public void limpiarCampos() {
-        txtId.setText("");
-        txtRut.setText("");
-        txtNombre.setText("");
-        txtApellido.setText("");
-        txtLicencia.setText("");
-        txtTelefono.setText("");
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnVolver;
+    private javax.swing.JButton btnactualizar;
+    private javax.swing.JButton btnagregarconductor;
+    private javax.swing.JButton btnasignar;
+    private javax.swing.JButton btnasignarcamion;
+    private javax.swing.JButton btneliminarcamion;
+    private javax.swing.JButton btnmodificarconductor;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> jcamionesdisponibles;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblLicencia;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRut;
     private javax.swing.JLabel lblTelefono;
-    private javax.swing.JTable tablaConductores;
+    private javax.swing.JLabel lblcamionesdisponibles;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLicencia;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRut;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
-
-

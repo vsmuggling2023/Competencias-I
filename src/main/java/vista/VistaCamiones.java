@@ -9,7 +9,7 @@ package vista;
  * @author Santo Tomas
  */
 public class VistaCamiones extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCamiones.class.getName());
 
     /**
@@ -39,7 +39,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         jestado.setVisible(false);
     }
     private int idCamionSeleccionado = -1;
-    
+
     private void mostrarFormulario(boolean esModificar) {
         jpatente.setVisible(true);
         jmarca.setVisible(true);
@@ -69,8 +69,8 @@ public class VistaCamiones extends javax.swing.JFrame {
             txtkilometros.setText("");
         }
     }
-    
-        private void cargarCamiones() {
+
+    private void cargarCamiones() {
         Dao.CamionesDao dao = new Dao.CamionesDao();
 
         java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null);
@@ -90,7 +90,7 @@ public class VistaCamiones extends javax.swing.JFrame {
             });
         }
     }
-    
+
     private void guardarCamion() {
         try {
             modelo.Camion camion = new modelo.Camion();
@@ -132,6 +132,7 @@ public class VistaCamiones extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos");
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -334,10 +335,10 @@ public class VistaCamiones extends javax.swing.JFrame {
         int id = (int) jTable1.getValueAt(fila, 0);
 
         int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Seguro que quieres eliminar este camión?",
-            "Confirmar eliminación",
-            javax.swing.JOptionPane.YES_NO_OPTION
+                this,
+                "¿Seguro que quieres eliminar este camión?",
+                "Confirmar eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION
         );
 
         if (confirm != javax.swing.JOptionPane.YES_OPTION) {
@@ -394,7 +395,6 @@ public class VistaCamiones extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregarcamiones;

@@ -151,16 +151,14 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnConductoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConductoresActionPerformed
-    try {
+        try {
             vista.VistaConductores ventana = new vista.VistaConductores();
             ventana.setLocationRelativeTo(null);
             ventana.setVisible(true);
-            this.dispose(); 
+            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-
     }//GEN-LAST:event_btnConductoresActionPerformed
 
     private void CerrarSesion(){
