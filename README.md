@@ -54,6 +54,22 @@ CREATE TABLE usuarios (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- TABLA CONDUCTORES
+CREATE TABLE conductores(
+    id_conductor INT AUTO_INCREMENT PRIMARY KEY,
+    rut VARCHAR(12) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    tipo_licencia VARCHAR(10) NOT NULL,
+    telefono VARCHAR(15),
+    id_camion INT,
+    CONSTRAINT fk_conductor_camion
+    FOREIGN KEY (id_camion) 
+    REFERENCES camiones(id_camion)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
+
 -- TABLA CAMIONES
 CREATE TABLE camiones (
     id_camion INT AUTO_INCREMENT PRIMARY KEY,
