@@ -37,6 +37,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         btnactualizar.setVisible(false);
         cestado.setVisible(false);
         jestado.setVisible(false);
+        cargarCamiones();
     }
     private int idCamionSeleccionado = -1;
 
@@ -72,10 +73,10 @@ public class VistaCamiones extends javax.swing.JFrame {
 
     private void cargarCamiones() {
         Dao.CamionesDao dao = new Dao.CamionesDao();
-
+        // Ahora esta línea ya no dará error porque el DAO reconoce los 5 parámetros
         java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null);
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         for (modelo.Camion c : lista) {

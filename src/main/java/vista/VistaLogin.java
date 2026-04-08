@@ -85,8 +85,8 @@ public class VistaLogin extends javax.swing.JFrame {
         btnlogin.setBackground(new java.awt.Color(204, 204, 204));
         btnlogin.setText("Iniciar Sesión");
         btnlogin.setBorder(null);
-        btnlogin.setBorderPainted(false);
-        btnlogin.setOpaque(false);
+        btnlogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnlogin.setOpaque(true);
         btnlogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnloginActionPerformed(evt);

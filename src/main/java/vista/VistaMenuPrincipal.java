@@ -14,15 +14,16 @@ import javax.swing.JOptionPane;
  * @author Mouli
  */
 public class VistaMenuPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaMenuPrincipal.class.getName());
 
     /**
      * Creates new form VistaMenuPrincipal
      */
-    public VistaMenuPrincipal(){
+    public VistaMenuPrincipal() {
         initComponents();
     }
+
     public VistaMenuPrincipal(modelo.Usuario usuario) {
         initComponents();
         jLabel1.setText("Hola " + usuario.getNombre());
@@ -31,7 +32,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         this.setResizable(false);
         verificarMantenimiento();
     }
-    
+
     private void verificarMantenimiento() {
         CamionesDao dao = new CamionesDao();
         List<Camion> camiones = dao.listarCamiones(null, null, null, null, null);
@@ -39,9 +40,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         for (Camion c : camiones) {
             if (c.getKilometro_acumulado() >= 5000) {
                 JOptionPane.showMessageDialog(this,
-                    "El camión con patente " + c.getPatente() + " con " + c.getKilometro_acumulado() + " necesita mantenimiento",
-                    "Alerta",
-                    JOptionPane.WARNING_MESSAGE
+                        "El camión con patente " + c.getPatente() + " con " + c.getKilometro_acumulado() + " necesita mantenimiento",
+                        "Alerta",
+                        JOptionPane.WARNING_MESSAGE
                 );
             }
         }
@@ -57,19 +58,19 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnUsuario = new javax.swing.JButton();
         btnConductores = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnCamiones = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("jLabel1");
 
-        jButton1.setText("Gestión de Usuarios");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnUsuario.setText("Gestión de Usuarios");
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnUsuarioActionPerformed(evt);
             }
         });
 
@@ -80,17 +81,17 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Gestión de Camiones");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCamiones.setText("Gestión de Camiones");
+        btnCamiones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCamionesActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Cerrar Sesión");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
             }
         });
 
@@ -102,13 +103,13 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4))
+                        .addComponent(btnCerrarSesion))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(165, 165, 165)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnConductores)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCamiones, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 168, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -120,64 +121,58 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton4)
+                .addComponent(btnCerrarSesion)
                 .addGap(75, 75, 75)
                 .addComponent(jLabel1)
                 .addGap(51, 51, 51)
-                .addComponent(jButton3)
+                .addComponent(btnCamiones)
                 .addGap(94, 94, 94)
                 .addComponent(btnConductores)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnUsuario)
                 .addGap(91, 91, 91))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         VistaUsuarios vista = new VistaUsuarios();
         vista.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnUsuarioActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         CerrarSesion();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnCamionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamionesActionPerformed
         VistaCamiones vista = new VistaCamiones();
         vista.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCamionesActionPerformed
 
     private void btnConductoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConductoresActionPerformed
-        try {
-            vista.VistaConductores ventana = new vista.VistaConductores();
-            ventana.setLocationRelativeTo(null);
-            ventana.setVisible(true);
-            
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        }
+        VistaConductores vc = new VistaConductores();
+        vc.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnConductoresActionPerformed
 
-    private void CerrarSesion(){
+    private void CerrarSesion() {
         VistaLogin vista = new VistaLogin();
-        vista.setVisible(true); 
+        vista.setVisible(true);
         this.dispose();
     }
-    
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCamiones;
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConductores;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnUsuario;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
-
-

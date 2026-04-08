@@ -9,7 +9,7 @@ package vista;
  * @author Mouli
  */
 public class VistaUsuarios extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaUsuarios.class.getName());
 
     /**
@@ -21,18 +21,15 @@ public class VistaUsuarios extends javax.swing.JFrame {
         setTitle("Gestión de Usuarios");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        cargarUsuarios();
     }
-    
+
     private void cargarUsuarios() {
         Dao.UsuariosDao dao = new Dao.UsuariosDao();
+        java.util.List<modelo.Usuario> lista = dao.listarUsuario(); // Llama al método simplificado
 
-        // Llamamos al método (puedes pasar null porque no usas filtros)
-        java.util.List<modelo.Usuario> lista = dao.listarUsuario(null, null, null, null);
-
-        // Modelo de la tabla
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-
-        model.setRowCount(0); // limpiar tabla antes de cargar
+        model.setRowCount(0);
 
         for (modelo.Usuario u : lista) {
             model.addRow(new Object[]{
@@ -115,7 +112,6 @@ public class VistaUsuarios extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

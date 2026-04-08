@@ -35,6 +35,7 @@ public class VistaConductores extends javax.swing.JFrame {
         jcamionesdisponibles.setVisible(false);
         btnasignar.setVisible(false);
         btnactualizar.setVisible(false);
+        cargarConductores();
     }
     
     private int idConductorSeleccionado = -1;
@@ -62,26 +63,25 @@ public class VistaConductores extends javax.swing.JFrame {
         }
     }
     
-    private void cargarConductores() {
-        Dao.ConductorDao dao = new Dao.ConductorDao();
+  private void cargarConductores() {
+    Dao.ConductorDao dao = new Dao.ConductorDao();
+    java.util.List<modelo.Conductor> lista = dao.listarConductores();
 
-        java.util.List<modelo.Conductor> lista = dao.listarConductores();
+    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
 
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
-        for (modelo.Conductor co : lista) {
-            model.addRow(new Object[]{
-                co.getId_conductor(),
-                co.getRut(),
-                co.getNombre(),
-                co.getApellido(),
-                co.getTipo_licencia(),
-                co.getTelefono(),
-                co.getId_camion()
-            });
-        }
+    for (modelo.Conductor co : lista) {
+        model.addRow(new Object[]{
+            co.getId_conductor(),
+            co.getRut(),
+            co.getNombre(),
+            co.getApellido(),
+            co.getTipo_licencia(),
+            co.getTelefono(),
+            co.getId_camion() == 0 ? "Sin asignar" : co.getId_camion() // Mejora visual
+        });
     }
+}
     
     private void guardarConductor() {
         try {
