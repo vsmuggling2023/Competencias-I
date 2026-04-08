@@ -9,8 +9,6 @@ public class Conexion {
     private static final String HOST = "mysql-softimelody.alwaysdata.net";
     private static final String USER = "439733";
     private static final String PASS = "MaxRage1";
-    // El nombre de la base de datos en AlwaysData suele ser 'usuario_nombre'
-    // Asegúrate de que coincida con el nombre que creaste en el panel
     private static final String DB = "softimelody_proyecto_camiones"; 
     
     private static final String URL = "jdbc:mysql://" + HOST + "/" + DB + "?useSSL=false&serverTimezone=UTC";

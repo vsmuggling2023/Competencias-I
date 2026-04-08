@@ -163,6 +163,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         jestado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_modificarcamion.setText("Modificar Camión");
         btn_modificarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +171,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_modificarcamionActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 573, -1, -1));
 
         btn_agregarcamiones.setText("Agregar Camión");
         btn_agregarcamiones.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +179,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_agregarcamionesActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 573, -1, -1));
 
         btn_eliminarcamion.setText("Eliminar Camión");
         btn_eliminarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +187,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_eliminarcamionActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 573, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,15 +202,27 @@ public class VistaCamiones extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 700, 499));
+
         jpatente.setText("Patente");
+        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, -1, -1));
 
         jmarca.setText("Marca");
+        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 150, -1, -1));
 
         jmodelo.setText("Modelo");
+        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, -1, -1));
 
         janio.setText("Año");
+        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 230, -1, -1));
 
         jkilometros.setText("Kilometros Acumulados");
+        getContentPane().add(jkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 330, -1, -1));
+        getContentPane().add(txtmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 150, 150, -1));
+        getContentPane().add(txtpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 110, 150, -1));
+        getContentPane().add(txtmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 190, 150, -1));
+        getContentPane().add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 230, 150, -1));
+        getContentPane().add(txtkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 330, 150, -1));
 
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -214,6 +230,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btnactualizarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 450, -1, -1));
 
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
@@ -221,105 +238,14 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1222, 6, -1, -1));
 
         cestado.setEditable(true);
         cestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 370, 150, -1));
 
         jestado.setText("Estado");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jmarca)
-                                    .addComponent(jpatente)
-                                    .addComponent(jmodelo)
-                                    .addComponent(janio))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jestado)
-                                    .addComponent(jkilometros))
-                                .addGap(18, 18, 18)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtmodelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtmarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtanio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtkilometros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtpatente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cestado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(btnactualizar)))
-                .addGap(103, 103, 103))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_volver)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(btn_agregarcamiones)
-                .addGap(108, 108, 108)
-                .addComponent(btn_modificarcamion)
-                .addGap(105, 105, 105)
-                .addComponent(btn_eliminarcamion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_eliminarcamion)
-                    .addComponent(btn_modificarcamion)
-                    .addComponent(btn_agregarcamiones))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpatente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jmarca))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jmodelo)
-                    .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(janio)
-                    .addComponent(txtanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtkilometros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jkilometros))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jestado))
-                .addGap(31, 31, 31)
-                .addComponent(btnactualizar)
-                .addGap(413, 413, 413))
-        );
+        getContentPane().add(jestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 370, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
