@@ -96,7 +96,7 @@ public class VistaLogin extends javax.swing.JFrame {
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 130, 150));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 100, 110));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login fondo.png"))); // NOI18N
         jLabel3.setText("jLabel3");
