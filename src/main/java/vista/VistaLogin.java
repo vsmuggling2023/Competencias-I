@@ -13,12 +13,13 @@ import java.security.MessageDigest;
 // Importa las clases necesarias de SQL
 import java.util.ArrayList;
 import modelo.Usuario;
+
 /**
  *
  * @author Mouli
  */
 public class VistaLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaLogin.class.getName());
 
     /**
@@ -26,7 +27,8 @@ public class VistaLogin extends javax.swing.JFrame {
      */
     public VistaLogin() {
         initComponents();
-        setTitle("Inicia Sesion");
+        setTitle("Iniciar Sesion");
+        establecerIcono();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.getRootPane().setDefaultButton(btnlogin);
@@ -46,52 +48,59 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnlogin = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtpassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtpassword.setBackground(new java.awt.Color(204, 204, 204));
         txtpassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtpasswordActionPerformed(evt);
             }
         });
-        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 230, 30));
+        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 230, 30));
 
-        txtusuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtusuario.setBackground(new java.awt.Color(204, 204, 204));
         txtusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtusuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 230, 30));
+        getContentPane().add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 230, 30));
 
-        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Contraseña");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 100, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 100, 30));
 
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Usuario");
         jLabel1.setToolTipText("");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 90, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 90, 30));
 
+        btnlogin.setBackground(new java.awt.Color(204, 204, 204));
         btnlogin.setText("Iniciar Sesión");
         btnlogin.setBorder(null);
         btnlogin.setBorderPainted(false);
+        btnlogin.setOpaque(false);
         btnlogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnloginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 190, 40));
+        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 170, 30));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/siiiiiiiiiii.png"))); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 130, 150));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login fondo.png"))); // NOI18N
         jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 800));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,6 +116,18 @@ public class VistaLogin extends javax.swing.JFrame {
     private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpasswordActionPerformed
+    private void establecerIcono() {
+        try {
+           
+            java.net.URL urlIcono = getClass().getResource("/images/Logo.png");
+            if (urlIcono != null) {
+                java.awt.Image icono = new javax.swing.ImageIcon(urlIcono).getImage();
+                this.setIconImage(icono);
+            }
+        } catch (Exception e) {
+            System.err.println("No se pudo cargar el icono: " + e.getMessage());
+        }
+    }
 
     private void login() {
         String user = txtusuario.getText().trim();
@@ -131,6 +152,7 @@ public class VistaLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Revisa tus credenciales!", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -161,6 +183,7 @@ public class VistaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField txtpassword;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
