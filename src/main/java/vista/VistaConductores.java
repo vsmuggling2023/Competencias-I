@@ -21,47 +21,11 @@ public class VistaConductores extends javax.swing.JFrame {
         setTitle("Gestión de Conductores");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        lblRut.setVisible(false);
-        lblNombre.setVisible(false);
-        lblApellido.setVisible(false);
-        lblLicencia.setVisible(false);
-        lblTelefono.setVisible(false);
-        txtRut.setVisible(false);
-        txtNombre.setVisible(false);
-        txtApellido.setVisible(false);
-        txtLicencia.setVisible(false);
-        txtTelefono.setVisible(false);
-        lblcamionesdisponibles.setVisible(false);
-        jcamionesdisponibles.setVisible(false);
-        btnasignar.setVisible(false);
-        btnactualizar.setVisible(false);
         cargarConductores();
     }
     
     private int idConductorSeleccionado = -1;
     
-    private void mostrarFormulario(boolean esModificar) {
-        lblRut.setVisible(true);
-        lblNombre.setVisible(true);
-        lblApellido.setVisible(true);
-        lblLicencia.setVisible(true);
-        lblTelefono.setVisible(true);
-        txtRut.setVisible(true);
-        txtNombre.setVisible(true);
-        txtApellido.setVisible(true);
-        txtLicencia.setVisible(true);
-        txtTelefono.setVisible(true); 
-
-        btnactualizar.setVisible(true);
-
-        if (!esModificar) {
-            txtRut.setText("");
-            txtNombre.setText("");
-            txtApellido.setText("");
-            txtLicencia.setText("");
-            txtTelefono.setText("");
-        }
-    }
     
   private void cargarConductores() {
     Dao.ConductorDao dao = new Dao.ConductorDao();
@@ -145,6 +109,7 @@ public class VistaConductores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_volver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         lblTelefono = new javax.swing.JLabel();
@@ -165,8 +130,18 @@ public class VistaConductores extends javax.swing.JFrame {
         lblcamionesdisponibles = new javax.swing.JLabel();
         jcamionesdisponibles = new javax.swing.JComboBox<>();
         btnasignar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_volver.setText("Volver");
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,15 +156,27 @@ public class VistaConductores extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 680, 430));
+
         lblTelefono.setText("Telefono");
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, -1, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 230, 150, -1));
+        getContentPane().add(txtRut, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 200, 150, -1));
+        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 270, 150, -1));
+        getContentPane().add(txtLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 310, 150, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 350, 150, -1));
 
         lblRut.setText("RUT");
+        getContentPane().add(lblRut, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, -1, -1));
 
         lblNombre.setText("Nombre");
+        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, -1, -1));
 
         lblApellido.setText("Apellido");
+        getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 280, -1, -1));
 
         lblLicencia.setText("Licencia");
+        getContentPane().add(lblLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 310, -1, -1));
 
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +184,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnactualizarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, -1, -1));
 
         btnagregarconductor.setText("Agregar Conductor");
         btnagregarconductor.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +192,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnagregarconductorActionPerformed(evt);
             }
         });
+        getContentPane().add(btnagregarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, -1, -1));
 
         btnmodificarconductor.setText("Modificar Conductor");
         btnmodificarconductor.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +200,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnmodificarconductorActionPerformed(evt);
             }
         });
+        getContentPane().add(btnmodificarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, -1, -1));
 
         btnasignarcamion.setText("Asignar camión");
         btnasignarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +208,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnasignarcamionActionPerformed(evt);
             }
         });
+        getContentPane().add(btnasignarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 550, -1, -1));
 
         btneliminarcamion.setText("Eliminar Conductor");
         btneliminarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -225,10 +216,13 @@ public class VistaConductores extends javax.swing.JFrame {
                 btneliminarcamionActionPerformed(evt);
             }
         });
+        getContentPane().add(btneliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, -1, -1));
 
         lblcamionesdisponibles.setText("Camiones disponibles");
+        getContentPane().add(lblcamionesdisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, -1, -1));
 
         jcamionesdisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jcamionesdisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 390, 134, -1));
 
         btnasignar.setText("Asignar");
         btnasignar.addActionListener(new java.awt.event.ActionListener() {
@@ -236,94 +230,10 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnasignarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnasignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombre)
-                            .addComponent(lblRut)
-                            .addComponent(lblApellido)
-                            .addComponent(lblLicencia)
-                            .addComponent(lblTelefono)
-                            .addComponent(lblcamionesdisponibles))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLicencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jcamionesdisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtRut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(169, 169, 169))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnasignar)
-                            .addComponent(btnactualizar))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btnagregarconductor)
-                .addGap(18, 18, 18)
-                .addComponent(btnmodificarconductor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnasignarcamion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btneliminarcamion)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnagregarconductor)
-                            .addComponent(btnmodificarconductor)
-                            .addComponent(btnasignarcamion)
-                            .addComponent(btneliminarcamion)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRut))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre))
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellido)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblLicencia)
-                            .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTelefono)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnactualizar)
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblcamionesdisponibles)
-                            .addComponent(jcamionesdisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnasignar)))
-                .addContainerGap(334, Short.MAX_VALUE))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -334,7 +244,7 @@ public class VistaConductores extends javax.swing.JFrame {
 
     private void btnagregarconductorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarconductorActionPerformed
        idConductorSeleccionado = -1;
-       mostrarFormulario(false);
+      
        btnactualizar.setText("Agregar Camión");
     }//GEN-LAST:event_btnagregarconductorActionPerformed
 
@@ -380,7 +290,7 @@ public class VistaConductores extends javax.swing.JFrame {
 
         idConductorSeleccionado = (int) jTable1.getValueAt(fila, 0);
 
-        mostrarFormulario(true);
+        
 
         txtRut.setText(jTable1.getValueAt(fila, 1).toString());
         txtNombre.setText(jTable1.getValueAt(fila, 2).toString());
@@ -422,17 +332,25 @@ public class VistaConductores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btneliminarcamionActionPerformed
 
+    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
+        VistaMenuPrincipal vista = new VistaMenuPrincipal();
+        vista.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_volver;
     private javax.swing.JButton btnactualizar;
     private javax.swing.JButton btnagregarconductor;
     private javax.swing.JButton btnasignar;
     private javax.swing.JButton btnasignarcamion;
     private javax.swing.JButton btneliminarcamion;
     private javax.swing.JButton btnmodificarconductor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcamionesdisponibles;

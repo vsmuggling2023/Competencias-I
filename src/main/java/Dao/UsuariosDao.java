@@ -40,4 +40,42 @@ public class UsuariosDao {
         return lista;
     }
 
+    public boolean agregarUsuario(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (Nombre, Email, tipo_usuario) VALUES (?, ?, ?)";
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getEmail());
+            ps.setString(3, usuario.getTipo_usuario());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al agregar usuario: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean modificarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuarios SET Nombre = ?, Email = ?, tipo_usuario = ? WHERE id_usuario = ?";
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getEmail());
+            ps.setString(3, usuario.getTipo_usuario());
+            ps.setInt(4, usuario.getId_usuario());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al modificar usuario: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarUsuario(int id) {
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar usuario: " + e.getMessage());
+            return false;
+        }
+    }
+
 }

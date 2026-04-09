@@ -24,19 +24,6 @@ public class VistaCamiones extends javax.swing.JFrame {
         setTitle("Gestión de Camiones");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        jpatente.setVisible(false);
-        jmarca.setVisible(false);
-        jmodelo.setVisible(false);
-        janio.setVisible(false);
-        jkilometros.setVisible(false);
-        txtpatente.setVisible(false);
-        txtmarca.setVisible(false);
-        txtmodelo.setVisible(false);
-        txtanio.setVisible(false);
-        txtkilometros.setVisible(false);
-        btnactualizar.setVisible(false);
-        cestado.setVisible(false);
-        jestado.setVisible(false);
         cargarCamiones();
     }
     private int idCamionSeleccionado = -1;
@@ -162,6 +149,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         btn_volver = new javax.swing.JButton();
         cestado = new javax.swing.JComboBox<>();
         jestado = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,7 +160,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_modificarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 573, -1, -1));
+        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 570, -1, -1));
 
         btn_agregarcamiones.setText("Agregar Camión");
         btn_agregarcamiones.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +168,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_agregarcamionesActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 573, -1, -1));
+        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, -1, -1));
 
         btn_eliminarcamion.setText("Eliminar Camión");
         btn_eliminarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +176,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_eliminarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 573, -1, -1));
+        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 570, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,27 +191,27 @@ public class VistaCamiones extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 700, 499));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 750, 499));
 
         jpatente.setText("Patente");
-        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, -1, -1));
+        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, -1, -1));
 
         jmarca.setText("Marca");
-        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 150, -1, -1));
+        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 250, -1, -1));
 
         jmodelo.setText("Modelo");
-        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, -1, -1));
+        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 290, -1, -1));
 
         janio.setText("Año");
-        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 230, -1, -1));
+        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 330, -1, -1));
 
         jkilometros.setText("Kilometros Acumulados");
-        getContentPane().add(jkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 330, -1, -1));
-        getContentPane().add(txtmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 150, 150, -1));
-        getContentPane().add(txtpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 110, 150, -1));
-        getContentPane().add(txtmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 190, 150, -1));
-        getContentPane().add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 230, 150, -1));
-        getContentPane().add(txtkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 330, 150, -1));
+        getContentPane().add(jkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 370, 130, -1));
+        getContentPane().add(txtmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 250, 150, -1));
+        getContentPane().add(txtpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 210, 150, -1));
+        getContentPane().add(txtmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 290, 150, -1));
+        getContentPane().add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 330, 150, -1));
+        getContentPane().add(txtkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 370, 150, -1));
 
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -231,7 +219,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btnactualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 450, -1, -1));
+        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 470, -1, -1));
 
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
@@ -239,14 +227,17 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1222, 6, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 20, -1, -1));
 
         cestado.setEditable(true);
         cestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 370, 150, -1));
+        getContentPane().add(cestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 150, -1));
 
         jestado.setText("Estado");
-        getContentPane().add(jestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 370, -1, -1));
+        getContentPane().add(jestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 410, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -330,6 +321,7 @@ public class VistaCamiones extends javax.swing.JFrame {
     private javax.swing.JButton btn_volver;
     private javax.swing.JButton btnactualizar;
     private javax.swing.JComboBox<String> cestado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel janio;

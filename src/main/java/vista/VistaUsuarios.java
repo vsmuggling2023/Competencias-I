@@ -4,6 +4,8 @@
  */
 package vista;
 
+import java.awt.HeadlessException;
+
 /**
  *
  * @author Mouli
@@ -15,13 +17,14 @@ public class VistaUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form VistaUsuarios
      */
+    private int idUsuarioSeleccionado = -1;
+
     public VistaUsuarios() {
         initComponents();
         cargarUsuarios();
         setTitle("Gestión de Usuarios");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargarUsuarios();
     }
 
     private void cargarUsuarios() {
@@ -41,6 +44,44 @@ public class VistaUsuarios extends javax.swing.JFrame {
         }
     }
 
+    private void limpiarCampos() {
+        txtId.setText("");           // Limpia el campo ID
+        txtNombre.setText("");       // Limpia el nombre
+        txtCorreo.setText("");       // Limpia el correo
+        txtRol.setText("");          // Limpia el rol
+
+        idUsuarioSeleccionado = -1;  // Reinicia la variable de control (igual que en Camiones)
+        btnactualizar.setText("Actualizar"); // Restablece el texto del botón
+    }
+
+    private void guardarUsuario() {
+        try {
+            modelo.Usuario usuario = new modelo.Usuario();
+            usuario.setNombre(txtNombre.getText());
+            usuario.setEmail(txtCorreo.getText());
+            usuario.setTipo_usuario(txtRol.getText());
+
+            Dao.UsuariosDao dao = new Dao.UsuariosDao();
+            boolean resultado;
+
+            if (idUsuarioSeleccionado != -1) {
+                usuario.setId_usuario(idUsuarioSeleccionado);
+                resultado = dao.modificarUsuario(usuario);
+            } else {
+                resultado = dao.agregarUsuario(usuario);
+            }
+
+            if (resultado) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
+                cargarUsuarios();
+                idUsuarioSeleccionado = -1;
+                limpiarCampos();
+            }
+        } catch (HeadlessException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,13 +91,57 @@ public class VistaUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_volver = new javax.swing.JButton();
+        jpatente = new javax.swing.JLabel();
+        jmarca = new javax.swing.JLabel();
+        jmodelo = new javax.swing.JLabel();
+        janio = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtRol = new javax.swing.JTextField();
+        btnactualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_volver.setText("Volver");
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 20, -1, -1));
+
+        jpatente.setText("ID");
+        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 220, -1, -1));
+
+        jmarca.setText("Nombre");
+        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 270, -1, -1));
+
+        jmodelo.setText("Correo");
+        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 330, -1, -1));
+
+        janio.setText("Rol");
+        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 390, -1, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 270, 150, -1));
+        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 220, 150, -1));
+        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 330, 150, -1));
+        getContentPane().add(txtRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 390, 150, -1));
+
+        btnactualizar.setText("Actualizar");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnactualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 450, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,53 +156,79 @@ public class VistaUsuarios extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 800, 499));
+
         jButton1.setText("Modificar Usuario");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, -1, -1));
 
         jButton2.setText("Agregar Usuario");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, -1, -1));
 
         jButton3.setText("Eliminar Usuario");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 570, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(179, 179, 179)
-                        .addComponent(jButton1)
-                        .addGap(184, 184, 184)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(350, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(135, 135, 135))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla");
+            return;
+        }
+
+        int id = (int) jTable1.getValueAt(fila, 0);
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este usuario?");
+
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+            Dao.UsuariosDao dao = new Dao.UsuariosDao();
+            if (dao.eliminarUsuario(id)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Usuario eliminado con éxito");
+                cargarUsuarios(); // Refresca la tabla automáticamente
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar");
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        guardarUsuario();
+    }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
+        VistaMenuPrincipal vista = new VistaMenuPrincipal();
+        vista.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_volver;
+    private javax.swing.JButton btnactualizar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel janio;
+    private javax.swing.JLabel jmarca;
+    private javax.swing.JLabel jmodelo;
+    private javax.swing.JLabel jpatente;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRol;
     // End of variables declaration//GEN-END:variables
 }

@@ -57,15 +57,15 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         btnUsuario = new javax.swing.JButton();
         btnConductores = new javax.swing.JButton();
         btnCamiones = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("jLabel1");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnUsuario.setText("Gestión de Usuarios");
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +73,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnUsuarioActionPerformed(evt);
             }
         });
+        getContentPane().add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 161, -1));
 
         btnConductores.setText("Gestión de Conductores");
         btnConductores.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +81,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnConductoresActionPerformed(evt);
             }
         });
+        getContentPane().add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
 
         btnCamiones.setText("Gestión de Camiones");
         btnCamiones.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +89,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnCamionesActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 161, -1));
 
         btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -94,44 +97,16 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnCerrarSesionActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnConductores)
-                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCamiones, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 168, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(227, 227, 227)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCerrarSesion)
-                .addGap(75, 75, 75)
-                .addComponent(jLabel1)
-                .addGap(51, 51, 51)
-                .addComponent(btnCamiones)
-                .addGap(94, 94, 94)
-                .addComponent(btnConductores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(btnUsuario)
-                .addGap(91, 91, 91))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 160, 120));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -174,5 +149,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnConductores;
     private javax.swing.JButton btnUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
