@@ -50,6 +50,7 @@ public class VistaLogin extends javax.swing.JFrame {
         btnlogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -92,15 +93,20 @@ public class VistaLogin extends javax.swing.JFrame {
                 btnloginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 170, 30));
+        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, 170, 30));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 100, 110));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconoNuevo.png"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 330, 170));
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login fondo.png"))); // NOI18N
         jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 690));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 690));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FONDOAHORASI.png"))); // NOI18N
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 900, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,6 +190,7 @@ public class VistaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField txtpassword;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables

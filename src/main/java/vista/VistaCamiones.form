@@ -70,7 +70,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="50" y="50" width="750" height="499"/>
+          <AbsoluteConstraints x="50" y="50" width="770" height="499"/>
         </Constraint>
       </Constraints>
 
@@ -80,13 +80,13 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="4">
-                <Column editable="true" title="id" type="java.lang.Object"/>
-                <Column editable="true" title="Patente" type="java.lang.Object"/>
-                <Column editable="true" title="Marca" type="java.lang.Object"/>
-                <Column editable="true" title="Modelo" type="java.lang.Object"/>
-                <Column editable="true" title="A&#xf1;o" type="java.lang.Object"/>
-                <Column editable="true" title="Kilometros Acumulado" type="java.lang.Object"/>
-                <Column editable="true" title="Estado" type="java.lang.Object"/>
+                <Column editable="false" title="id" type="java.lang.Object"/>
+                <Column editable="false" title="Patente" type="java.lang.Object"/>
+                <Column editable="false" title="Marca" type="java.lang.Object"/>
+                <Column editable="false" title="Modelo" type="java.lang.Object"/>
+                <Column editable="false" title="A&#xf1;o" type="java.lang.Object"/>
+                <Column editable="false" title="Kilometros Acumulado" type="java.lang.Object"/>
+                <Column editable="false" title="Estado" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -144,7 +144,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="830" y="20" width="-1" height="-1"/>
+          <AbsoluteConstraints x="860" y="20" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

@@ -99,10 +99,18 @@ public class VistaCamiones extends javax.swing.JFrame {
             new String [] {
                 "id", "Patente", "Marca", "Modelo", "Año", "Kilometros Acumulado", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 750, 499));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 770, 499));
 
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +118,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));

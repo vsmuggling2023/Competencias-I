@@ -72,7 +72,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,10 +84,18 @@ public class VistaConductores extends javax.swing.JFrame {
             new String [] {
                 "ID", "RUT", "Nombre", "Apellido", "Licencia", "Telefono", "Camión Asignado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 770, 480));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 770, 480));
 
         btnagregarconductor.setText("Agregar Conductor");
         btnagregarconductor.addActionListener(new java.awt.event.ActionListener() {

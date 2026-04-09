@@ -73,7 +73,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 161, -1));
+        getContentPane().add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 161, -1));
 
         btnConductores.setText("Gestión de Conductores");
         btnConductores.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +81,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnConductoresActionPerformed(evt);
             }
         });
-        getContentPane().add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
+        getContentPane().add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
 
         btnCamiones.setText("Gestión de Camiones");
         btnCamiones.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +89,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 btnCamionesActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 161, -1));
+        getContentPane().add(btnCamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 161, -1));
 
         btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +99,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IconoPequeño.png"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 160, 120));
 
