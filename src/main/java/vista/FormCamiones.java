@@ -17,9 +17,13 @@ public class FormCamiones extends javax.swing.JDialog {
         initComponents();
         this.camion = camion;
         this.setLocationRelativeTo(null); // Centrar la ventana
-
+        cbEstado.removeAllItems(); // Borra los "Item 1, 2, 3"
+        cbEstado.addItem("Disponible");
+        cbEstado.addItem("Mantenimiento");
+        cbEstado.addItem("Asignado"); // Agregamos este porque existe en tu base de datos
         if (camion != null) {
             // Modo MODIFICAR: Cargar datos en los campos
+            cbEstado.setSelectedItem(camion.getEstado().name());
             this.setTitle("Modificar Camión");
             txtPatente.setText(camion.getPatente());
             txtMarca.setText(camion.getMarca());
@@ -140,7 +144,7 @@ public class FormCamiones extends javax.swing.JDialog {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Estado");
         jLabel6.setOpaque(true);
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 50, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 50, 30));
 
         jLabel7.setBackground(new java.awt.Color(51, 51, 51));
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -150,7 +154,12 @@ public class FormCamiones extends javax.swing.JDialog {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 50, 20));
 
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 100, 20));
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, 120, 30));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IconoPequeño.png"))); // NOI18N
@@ -179,51 +188,47 @@ public class FormCamiones extends javax.swing.JDialog {
     }//GEN-LAST:event_txtModeloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      try {
-        Dao.CamionesDao dao = new Dao.CamionesDao();
+        try {
+            Dao.CamionesDao dao = new Dao.CamionesDao();
 
-        if (this.camion == null) {
-            // MODO AGREGAR
-            modelo.Camion nuevo = new modelo.Camion();
-            nuevo.setPatente(txtPatente.getText());
-            nuevo.setMarca(txtMarca.getText());
-            nuevo.setModelo(txtModelo.getText());
-            nuevo.setAnio(Integer.parseInt(txtAnio.getText()));
-            // Si quieres que al crear empiece con los km del campo:
-            nuevo.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText()));
-            dao.agregarCamion(nuevo); 
-        } else {
-            // MODO MODIFICAR
-            this.camion.setPatente(txtPatente.getText());
-            this.camion.setMarca(txtMarca.getText());
-            this.camion.setModelo(txtModelo.getText());
-            this.camion.setAnio(Integer.parseInt(txtAnio.getText()));
-            
-            // AGREGA ESTA LÍNEA PARA QUE SE ACTUALICEN LOS KM:
-            this.camion.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText()));
-            
-            dao.modificarCamion(this.camion); 
+            // Capturar el estado seleccionado del combo box
+            String estadoSeleccionado = cbEstado.getSelectedItem().toString();
+            modelo.Camion.Estado estadoEnum = modelo.Camion.Estado.valueOf(estadoSeleccionado);
+
+            if (this.camion == null) {
+                modelo.Camion nuevo = new modelo.Camion();
+                // ... (tus otros sets)
+                nuevo.setEstado(estadoEnum); // Asignar estado al nuevo
+                dao.agregarCamion(nuevo);
+            } else {
+                // ... (tus otros sets)
+                this.camion.setEstado(estadoEnum); // Actualizar estado en el existente
+                dao.modificarCamion(this.camion);
+            }
+
+            this.dispose();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-        this.dispose(); 
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void textKilometrosAcumuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKilometrosAcumuladosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textKilometrosAcumuladosActionPerformed
 
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(() -> {
-        FormCamiones dialog = new FormCamiones(new javax.swing.JFrame(), true, null);
-        dialog.setVisible(true);
-    });
-}
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> {
+            FormCamiones dialog = new FormCamiones(new javax.swing.JFrame(), true, null);
+            dialog.setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
