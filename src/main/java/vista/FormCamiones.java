@@ -188,27 +188,69 @@ public class FormCamiones extends javax.swing.JDialog {
     }//GEN-LAST:event_txtModeloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       
         try {
             Dao.CamionesDao dao = new Dao.CamionesDao();
 
-            // Capturar el estado seleccionado del combo box
-            String estadoSeleccionado = cbEstado.getSelectedItem().toString();
-            modelo.Camion.Estado estadoEnum = modelo.Camion.Estado.valueOf(estadoSeleccionado);
+            // 1. Rescatar datos de los campos de la interfaz
+            String patente = txtPatente.getText().trim();
+            String marca = txtMarca.getText().trim();
+            String modeloCamion = txtModelo.getText().trim();
+            int anio = Integer.parseInt(txtAnio.getText().trim());
+            float km = Float.parseFloat(textKilometrosAcumulados.getText().trim());
 
+            // 2. Determinar el estado del camión
+            modelo.Camion.Estado estado;
             if (this.camion == null) {
-                modelo.Camion nuevo = new modelo.Camion();
-                // ... (tus otros sets)
-                nuevo.setEstado(estadoEnum); // Asignar estado al nuevo
-                dao.agregarCamion(nuevo);
+                // Si es nuevo, por defecto queda en Disponible
+                estado = modelo.Camion.Estado.Disponible;
             } else {
-                // ... (tus otros sets)
-                this.camion.setEstado(estadoEnum); // Actualizar estado en el existente
-                dao.modificarCamion(this.camion);
+                // Si estamos editando, leemos el valor seleccionado en el combo box
+                Object seleccionado = cbEstado.getSelectedItem();
+                if (seleccionado != null) {
+                    estado = modelo.Camion.Estado.valueOf(seleccionado.toString());
+                } else {
+                    // Si el combo estuviera vacío por error, mantenemos el estado actual
+                    estado = this.camion.getEstado();
+                }
             }
 
-            this.dispose();
+            // 3. Ejecutar la acción (Agregar o Modificar)
+            if (this.camion == null) {
+                // MODO AGREGAR
+                modelo.Camion nuevo = new modelo.Camion();
+                nuevo.setPatente(patente);
+                nuevo.setMarca(marca);
+                nuevo.setModelo(modeloCamion);
+                nuevo.setAnio(anio);
+                nuevo.setKilometro_acumulado(km);
+                nuevo.setEstado(estado);
+
+                if (dao.agregarCamion(nuevo)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Camión registrado exitosamente");
+                }
+            } else {
+                // MODO MODIFICAR
+                this.camion.setPatente(patente);
+                this.camion.setMarca(marca);
+                this.camion.setModelo(modeloCamion);
+                this.camion.setAnio(anio);
+                this.camion.setKilometro_acumulado(km);
+                this.camion.setEstado(estado);
+
+                if (dao.modificarCamion(this.camion)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Camión actualizado exitosamente");
+                }
+            }
+
+            this.dispose(); // Cerrar ventana tras la operación
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: El año y los kilómetros deben ser valores numéricos");
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error en el estado seleccionado");
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

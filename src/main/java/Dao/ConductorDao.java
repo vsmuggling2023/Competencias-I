@@ -14,24 +14,22 @@ public class ConductorDao {
     public List<Conductor> listarConductores() {
         List<Conductor> lista = new ArrayList<>();
 
-        String sql = "SELECT c.id_conductor, c.rut, c.nombre, c.apellido, " +
-              "c.tipo_licencia, c.telefono, c.id_camion " +
-              "FROM conductores c " +
-              "LEFT JOIN camiones cam ON c.id_camion = cam.id_camion";
+        String sql = "SELECT c.id_conductor, c.rut, c.nombre, c.apellido, "
+                + "c.tipo_licencia, c.telefono, c.id_camion "
+                + "FROM conductores c "
+                + "LEFT JOIN camiones cam ON c.id_camion = cam.id_camion";
 
-        try (Connection conn = Conexion.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 lista.add(new Conductor(
-                    rs.getInt("id_conductor"),
-                    rs.getString("rut"),
-                    rs.getString("nombre"),
-                    rs.getString("apellido"),
-                    rs.getString("tipo_licencia"),
-                    rs.getString("telefono"),
-                    rs.getInt("id_camion")
+                        rs.getInt("id_conductor"),
+                        rs.getString("rut"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("tipo_licencia"),
+                        rs.getString("telefono"),
+                        rs.getInt("id_camion")
                 ));
             }
 
@@ -45,8 +43,7 @@ public class ConductorDao {
     public boolean agregarConductor(Conductor conductor) {
         String sql = "INSERT INTO conductores (rut, nombre, apellido, tipo_licencia, telefono) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = Conexion.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, conductor.getRut());
             ps.setString(2, conductor.getNombre());
@@ -65,8 +62,7 @@ public class ConductorDao {
     public boolean modificarConductor(Conductor conductor) {
         String sql = "UPDATE conductores SET rut = ?, nombre = ?, apellido = ?, tipo_licencia = ?, telefono = ? WHERE id_conductor = ?";
 
-        try (Connection conn = Conexion.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, conductor.getRut());
             ps.setString(2, conductor.getNombre());
@@ -86,8 +82,7 @@ public class ConductorDao {
     public boolean eliminarConductor(int id) {
         String sql = "DELETE FROM conductores WHERE id_conductor = ?";
 
-        try (Connection conn = Conexion.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -98,39 +93,58 @@ public class ConductorDao {
             return false;
         }
     }
-    //Es booleano ya que el resultado es si se asigna o no.
+
+
     public boolean asignarCamion(int idConductor, int idCamion) {
-        String sql1 = "UPDATE conductores SET id_camion = ? WHERE id_conductor = ?";
-        String sql2 = "UPDATE camiones SET estado = 'Asignado' WHERE id_camion = ?";
+      
+        String sqlGetAnterior = "SELECT id_camion FROM conductores WHERE id_conductor = ?";
+        
+        String sqlLiberarAnterior = "UPDATE camiones SET estado = 'Disponible' WHERE id_camion = ?";
+       
+        String sqlAsignarNuevo = "UPDATE conductores SET id_camion = ? WHERE id_conductor = ?";
+  
+        String sqlMarcarAsignado = "UPDATE camiones SET estado = 'Asignado' WHERE id_camion = ?";
 
         try (Connection conn = Conexion.getConnection()) {
-            conn.setAutoCommit(false); // transacción
+            conn.setAutoCommit(false); // Iniciamos transacción
 
-            try (PreparedStatement ps1 = conn.prepareStatement(sql1);
-                 PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+            try (PreparedStatement psGet = conn.prepareStatement(sqlGetAnterior); PreparedStatement psLiberar = conn.prepareStatement(sqlLiberarAnterior); PreparedStatement psAsignar = conn.prepareStatement(sqlAsignarNuevo); PreparedStatement psMarcar = conn.prepareStatement(sqlMarcarAsignado)) {
 
-                // actualizar conductor
-                ps1.setInt(1, idCamion);
-                ps1.setInt(2, idConductor);
-                ps1.executeUpdate();
+                // 1. Obtener ID del camión anterior
+                psGet.setInt(1, idConductor);
+                ResultSet rs = psGet.executeQuery();
+                if (rs.next()) {
+                    int idAnterior = rs.getInt("id_camion");
+                    // 2. Si tenía un camión (id > 0) y es distinto al nuevo, lo liberamos
+                    if (idAnterior > 0 && idAnterior != idCamion) {
+                        psLiberar.setInt(1, idAnterior);
+                        psLiberar.executeUpdate();
+                    }
+                }
 
-                // actualizar estado del camión
-                ps2.setInt(1, idCamion);
-                ps2.executeUpdate();
+                // 3. Actualizar el conductor con el nuevo camión
+                psAsignar.setInt(1, idCamion); // idCamion puede ser 0 si se elige "Sin Camión"
+                psAsignar.setInt(2, idConductor);
+                psAsignar.executeUpdate();
 
-                conn.commit();
+                // 4. Si se asignó un camión real, cambiar su estado a 'Asignado'
+                if (idCamion > 0) {
+                    psMarcar.setInt(1, idCamion);
+                    psMarcar.executeUpdate();
+                }
+
+                conn.commit(); // Guardar todos los cambios
                 return true;
 
             } catch (SQLException e) {
-                conn.rollback();
-                System.err.println("Error al asignar camión: " + e.getMessage());
+                conn.rollback(); // Si algo falla, deshacer todo
+                System.err.println("Error en la transacción de asignación: " + e.getMessage());
                 return false;
             }
-
         } catch (SQLException e) {
             System.err.println("Error de conexión: " + e.getMessage());
             return false;
         }
     }
-    
+
 }
