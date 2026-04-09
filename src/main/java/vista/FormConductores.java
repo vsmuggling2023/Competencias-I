@@ -26,6 +26,7 @@ public class FormConductores extends javax.swing.JDialog {
             txtLicencia.setText(conductor.getTipo_licencia());
             txtTelefono.setText(conductor.getTelefono());
             btnGuardar.setText("Actualizar Datos");
+            
         } else {
             // Si es null, el formulario queda vacío para AGREGAR
             btnGuardar.setText("Registrar Conductor");

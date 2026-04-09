@@ -25,6 +25,7 @@ public class FormCamiones extends javax.swing.JDialog {
             txtMarca.setText(camion.getMarca());
             txtModelo.setText(camion.getModelo());
             txtAnio.setText(String.valueOf(camion.getAnio()));
+            textKilometrosAcumulados.setText(String.valueOf(camion.getKilometro_acumulado()));
             btnGuardar.setText("Actualizar");
         } else {
             // Modo AGREGAR: Campos vacíos
@@ -178,29 +179,36 @@ public class FormCamiones extends javax.swing.JDialog {
     }//GEN-LAST:event_txtModeloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
-            Dao.CamionesDao dao = new Dao.CamionesDao();
+      try {
+        Dao.CamionesDao dao = new Dao.CamionesDao();
 
-            // Si camion es null, creamos uno nuevo, si no, actualizamos el existente
-            if (this.camion == null) {
-                modelo.Camion nuevo = new modelo.Camion();
-                nuevo.setPatente(txtPatente.getText());
-                nuevo.setMarca(txtMarca.getText());
-                nuevo.setModelo(txtModelo.getText());
-                nuevo.setAnio(Integer.parseInt(txtAnio.getText()));
-                dao.agregarCamion(nuevo); //
-            } else {
-                this.camion.setPatente(txtPatente.getText());
-                this.camion.setMarca(txtMarca.getText());
-                this.camion.setModelo(txtModelo.getText());
-                this.camion.setAnio(Integer.parseInt(txtAnio.getText()));
-                dao.modificarCamion(this.camion); //
-            }
-
-            this.dispose(); // Cerrar ventana tras guardar
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos: " + e.getMessage());
+        if (this.camion == null) {
+            // MODO AGREGAR
+            modelo.Camion nuevo = new modelo.Camion();
+            nuevo.setPatente(txtPatente.getText());
+            nuevo.setMarca(txtMarca.getText());
+            nuevo.setModelo(txtModelo.getText());
+            nuevo.setAnio(Integer.parseInt(txtAnio.getText()));
+            // Si quieres que al crear empiece con los km del campo:
+            nuevo.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText()));
+            dao.agregarCamion(nuevo); 
+        } else {
+            // MODO MODIFICAR
+            this.camion.setPatente(txtPatente.getText());
+            this.camion.setMarca(txtMarca.getText());
+            this.camion.setModelo(txtModelo.getText());
+            this.camion.setAnio(Integer.parseInt(txtAnio.getText()));
+            
+            // AGREGA ESTA LÍNEA PARA QUE SE ACTUALICEN LOS KM:
+            this.camion.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText()));
+            
+            dao.modificarCamion(this.camion); 
         }
+
+        this.dispose(); 
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos: " + e.getMessage());
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void textKilometrosAcumuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKilometrosAcumuladosActionPerformed
