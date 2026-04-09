@@ -27,6 +27,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btn_volver">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Volver"/>
       </Properties>
       <Events>
@@ -111,6 +114,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnagregarconductor">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar Conductor"/>
       </Properties>
       <Events>
@@ -124,6 +130,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnmodificarconductor">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Modificar Conductor"/>
       </Properties>
       <Events>
@@ -137,6 +146,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btneliminarcamion">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Eliminar Conductor"/>
       </Properties>
       <Events>
@@ -150,8 +162,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/Fondoo.png"/>
+          <Image iconType="3" name="/images/FONDOAHORASI.png"/>
         </Property>
       </Properties>
       <Constraints>

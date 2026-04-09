@@ -27,6 +27,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btn_modificarcamion">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Modificar Cami&#xf3;n"/>
       </Properties>
       <Events>
@@ -34,12 +37,15 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="330" y="570" width="-1" height="-1"/>
+          <AbsoluteConstraints x="350" y="570" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btn_agregarcamiones">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar Cami&#xf3;n"/>
       </Properties>
       <Events>
@@ -47,12 +53,15 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="120" y="570" width="-1" height="-1"/>
+          <AbsoluteConstraints x="140" y="570" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btn_eliminarcamion">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Eliminar Cami&#xf3;n"/>
       </Properties>
       <Events>
@@ -60,7 +69,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="550" y="570" width="-1" height="-1"/>
+          <AbsoluteConstraints x="580" y="570" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -70,7 +79,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="50" y="50" width="770" height="499"/>
+          <AbsoluteConstraints x="50" y="50" width="790" height="499"/>
         </Constraint>
       </Constraints>
 
@@ -78,6 +87,12 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="23" green="20" red="21" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="4">
                 <Column editable="false" title="id" type="java.lang.Object"/>
@@ -137,6 +152,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btn_volver">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Volver"/>
       </Properties>
       <Events>
@@ -151,7 +169,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/Fondoo.png"/>
+          <Image iconType="3" name="/images/FONDOAHORASI.png"/>
         </Property>
       </Properties>
       <Constraints>

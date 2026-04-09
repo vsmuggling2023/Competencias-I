@@ -27,6 +27,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnUsuario">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Usuarios"/>
       </Properties>
       <Events>
@@ -40,6 +43,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnConductores">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Conductores"/>
       </Properties>
       <Events>
@@ -53,6 +59,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCamiones">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8c" green="6a" red="7d" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Camiones"/>
       </Properties>
       <Events>
@@ -79,14 +88,14 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/IconoPeque&#xf1;o.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="130" y="90" width="160" height="120"/>
+          <AbsoluteConstraints x="0" y="70" width="400" height="120"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -94,7 +103,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/Fondoo.png"/>
+          <Image iconType="3" name="/images/FONDOAHORASI.png"/>
         </Property>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>

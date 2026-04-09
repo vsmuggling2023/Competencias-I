@@ -65,30 +65,35 @@ public class VistaCamiones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btn_modificarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btn_modificarcamion.setText("Modificar Camión");
         btn_modificarcamion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modificarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 570, -1, -1));
+        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, -1, -1));
 
+        btn_agregarcamiones.setBackground(new java.awt.Color(125, 106, 140));
         btn_agregarcamiones.setText("Agregar Camión");
         btn_agregarcamiones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_agregarcamionesActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, -1, -1));
+        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, -1, -1));
 
+        btn_eliminarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btn_eliminarcamion.setText("Eliminar Camión");
         btn_eliminarcamion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_eliminarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 570, -1, -1));
+        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 570, -1, -1));
 
+        jTable1.setBackground(new java.awt.Color(33, 32, 35));
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -110,8 +115,9 @@ public class VistaCamiones extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 770, 499));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 790, 499));
 
+        btn_volver.setBackground(new java.awt.Color(125, 106, 140));
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +126,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         });
         getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FONDOAHORASI.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
 
         pack();

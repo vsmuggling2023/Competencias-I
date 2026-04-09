@@ -83,7 +83,7 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 90, 30));
 
-        btnlogin.setBackground(new java.awt.Color(204, 204, 204));
+        btnlogin.setBackground(new java.awt.Color(125, 106, 140));
         btnlogin.setText("Iniciar Sesión");
         btnlogin.setBorder(null);
         btnlogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

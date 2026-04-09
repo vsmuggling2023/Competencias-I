@@ -66,6 +66,7 @@ public class VistaConductores extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btn_volver.setBackground(new java.awt.Color(125, 106, 140));
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +98,7 @@ public class VistaConductores extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 770, 480));
 
+        btnagregarconductor.setBackground(new java.awt.Color(125, 106, 140));
         btnagregarconductor.setText("Agregar Conductor");
         btnagregarconductor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +107,7 @@ public class VistaConductores extends javax.swing.JFrame {
         });
         getContentPane().add(btnagregarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 560, -1, -1));
 
+        btnmodificarconductor.setBackground(new java.awt.Color(125, 106, 140));
         btnmodificarconductor.setText("Modificar Conductor");
         btnmodificarconductor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +116,7 @@ public class VistaConductores extends javax.swing.JFrame {
         });
         getContentPane().add(btnmodificarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, -1, -1));
 
+        btneliminarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btneliminarcamion.setText("Eliminar Conductor");
         btneliminarcamion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +125,8 @@ public class VistaConductores extends javax.swing.JFrame {
         });
         getContentPane().add(btneliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FONDOAHORASI.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
 
         pack();
