@@ -13,6 +13,7 @@ public class Usuario {
     private String nombre;
     private String email;
     private String tipo_usuario; //rol de usuario
+    private String contrasena;
 
     public Usuario() {
     }
@@ -54,6 +55,13 @@ public class Usuario {
 
     public void setTipo_usuario(String tipo_usuario) {
         this.tipo_usuario = tipo_usuario;
+    }
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
     
 }

@@ -41,11 +41,13 @@ public class UsuariosDao {
     }
 
     public boolean agregarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (Nombre, Email, tipo_usuario) VALUES (?, ?, ?)";
+        // El SQL debe incluir el campo 'contrasena' (o 'password' según tu tabla)
+        String sql = "INSERT INTO usuarios (Nombre, Email, tipo_usuario, password) VALUES (?, ?, ?, ?)";
         try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getEmail());
             ps.setString(3, usuario.getTipo_usuario());
+            ps.setString(4, usuario.getContrasena()); // Aquí se enviará "admin"
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error al agregar usuario: " + e.getMessage());

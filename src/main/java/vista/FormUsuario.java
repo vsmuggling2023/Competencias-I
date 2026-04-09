@@ -154,6 +154,7 @@ try {
         String nombre = txtNombre.getText().trim();
         String correo = txtCorreo.getText().trim();
         String rol = txtRol.getText().trim();
+        
 
         // Validación básica
         if (nombre.isEmpty() || correo.isEmpty() || rol.isEmpty()) {
@@ -166,6 +167,8 @@ try {
         usuarioEditado.setNombre(nombre);
         usuarioEditado.setEmail(correo);
         usuarioEditado.setTipo_usuario(rol);
+        
+        usuarioEditado.setContrasena("admin");
 
         Dao.UsuariosDao dao = new Dao.UsuariosDao();
         boolean exito;
