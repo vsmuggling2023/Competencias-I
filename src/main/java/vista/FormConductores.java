@@ -173,7 +173,45 @@ public class FormConductores extends javax.swing.JDialog {
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String rut = txtRut.getText().trim();
+        String nombre = txtNombre.getText().trim();
+        String apellido = txtApellido.getText().trim();
+        String licencia = txtLicencia.getText().trim();
+        String telefono = txtTelefono.getText().trim();
 
+        // Validar que no estén vacíos (opcional pero recomendado)
+        if (rut.isEmpty() || nombre.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios");
+            return;
+        }
+
+        Dao.ConductorDao dao = new Dao.ConductorDao();
+
+        if (this.conductor == null) {
+            // --- MODO REGISTRAR ---
+            modelo.Conductor nuevoConductor = new modelo.Conductor(0, rut, nombre, apellido, licencia, telefono, 0);
+            if (dao.agregarConductor(nuevoConductor)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Conductor registrado con éxito");
+                this.dispose(); // Cerrar ventana
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar");
+            }
+        } else {
+            // --- MODO ACTUALIZAR ---
+            // Actualizamos el objeto que ya teníamos con los nuevos datos del formulario
+            this.conductor.setRut(rut);
+            this.conductor.setNombre(nombre);
+            this.conductor.setApellido(apellido);
+            this.conductor.setTipo_licencia(licencia);
+            this.conductor.setTelefono(telefono);
+
+            if (dao.modificarConductor(this.conductor)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
+                this.dispose(); // Cerrar ventana
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar");
+            }
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLicenciaActionPerformed
