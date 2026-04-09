@@ -9,7 +9,7 @@ package vista;
  * @author Mouli
  */
 public class VistaConductores extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaConductores.class.getName());
 
     /**
@@ -23,82 +23,28 @@ public class VistaConductores extends javax.swing.JFrame {
         this.setResizable(false);
         cargarConductores();
     }
-    
+
     private int idConductorSeleccionado = -1;
-    
-    
-  private void cargarConductores() {
-    Dao.ConductorDao dao = new Dao.ConductorDao();
-    java.util.List<modelo.Conductor> lista = dao.listarConductores();
 
-    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0);
+    private void cargarConductores() {
+        Dao.ConductorDao dao = new Dao.ConductorDao();
+        java.util.List<modelo.Conductor> lista = dao.listarConductores();
 
-    for (modelo.Conductor co : lista) {
-        model.addRow(new Object[]{
-            co.getId_conductor(),
-            co.getRut(),
-            co.getNombre(),
-            co.getApellido(),
-            co.getTipo_licencia(),
-            co.getTelefono(),
-            co.getId_camion() == 0 ? "Sin asignar" : co.getId_camion() // Mejora visual
-        });
-    }
-}
-    
-    private void guardarConductor() {
-        try {
-            modelo.Conductor conductor = new modelo.Conductor();
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
-            conductor.setRut(txtRut.getText());
-            conductor.setNombre(txtNombre.getText());
-            conductor.setApellido(txtApellido.getText());
-            conductor.setTipo_licencia(txtLicencia.getText());
-            conductor.setTelefono(txtTelefono.getText());
-
-            Dao.ConductorDao dao = new Dao.ConductorDao();
-
-            boolean resultado;
-
-            if (idConductorSeleccionado != -1) {
-                // MODIFICAR
-                conductor.setId_conductor(idConductorSeleccionado);
-                resultado = dao.modificarConductor(conductor);
-            } else {
-                // AGREGAR
-                resultado = dao.agregarConductor(conductor);
-            }
-
-            if (resultado) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
-                cargarConductores();
-
-                idConductorSeleccionado = -1;
-                btnactualizar.setText("Guardar");
-
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error en la operación");
-            }
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos");
+        for (modelo.Conductor co : lista) {
+            model.addRow(new Object[]{
+                co.getId_conductor(),
+                co.getRut(),
+                co.getNombre(),
+                co.getApellido(),
+                co.getTipo_licencia(),
+                co.getTelefono(),
+                co.getId_camion() == 0 ? "Sin asignar" : co.getId_camion() // Mejora visual
+            });
         }
     }
-    private void cargarCamionesCombo() {
-        lblcamionesdisponibles.setVisible(true);
-        jcamionesdisponibles.setVisible(true);
-        btnasignar.setVisible(true);
-        jcamionesdisponibles.removeAllItems();
-
-        Dao.CamionesDao dao = new Dao.CamionesDao();
-        java.util.List<modelo.Camion> lista = dao.listarCamiones(null, null, null, null, null);
-
-        for (modelo.Camion c : lista) {
-            jcamionesdisponibles.addItem(c.getId_camion() + " - " + c.getPatente());
-        }
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -112,24 +58,9 @@ public class VistaConductores extends javax.swing.JFrame {
         btn_volver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        lblTelefono = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtRut = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        txtLicencia = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        lblRut = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        lblApellido = new javax.swing.JLabel();
-        lblLicencia = new javax.swing.JLabel();
-        btnactualizar = new javax.swing.JButton();
         btnagregarconductor = new javax.swing.JButton();
         btnmodificarconductor = new javax.swing.JButton();
-        btnasignarcamion = new javax.swing.JButton();
         btneliminarcamion = new javax.swing.JButton();
-        lblcamionesdisponibles = new javax.swing.JLabel();
-        jcamionesdisponibles = new javax.swing.JComboBox<>();
-        btnasignar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,7 +72,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,35 +87,7 @@ public class VistaConductores extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 680, 430));
-
-        lblTelefono.setText("Telefono");
-        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, -1, -1));
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 230, 150, -1));
-        getContentPane().add(txtRut, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 200, 150, -1));
-        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 270, 150, -1));
-        getContentPane().add(txtLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 310, 150, -1));
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 350, 150, -1));
-
-        lblRut.setText("RUT");
-        getContentPane().add(lblRut, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, -1, -1));
-
-        lblNombre.setText("Nombre");
-        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, -1, -1));
-
-        lblApellido.setText("Apellido");
-        getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 280, -1, -1));
-
-        lblLicencia.setText("Licencia");
-        getContentPane().add(lblLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 310, -1, -1));
-
-        btnactualizar.setText("Actualizar");
-        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnactualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 770, 480));
 
         btnagregarconductor.setText("Agregar Conductor");
         btnagregarconductor.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +95,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnagregarconductorActionPerformed(evt);
             }
         });
-        getContentPane().add(btnagregarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, -1, -1));
+        getContentPane().add(btnagregarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 560, -1, -1));
 
         btnmodificarconductor.setText("Modificar Conductor");
         btnmodificarconductor.addActionListener(new java.awt.event.ActionListener() {
@@ -200,15 +103,7 @@ public class VistaConductores extends javax.swing.JFrame {
                 btnmodificarconductorActionPerformed(evt);
             }
         });
-        getContentPane().add(btnmodificarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, -1, -1));
-
-        btnasignarcamion.setText("Asignar camión");
-        btnasignarcamion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnasignarcamionActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnasignarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 550, -1, -1));
+        getContentPane().add(btnmodificarconductor, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, -1, -1));
 
         btneliminarcamion.setText("Eliminar Conductor");
         btneliminarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -216,89 +111,43 @@ public class VistaConductores extends javax.swing.JFrame {
                 btneliminarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btneliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, -1, -1));
-
-        lblcamionesdisponibles.setText("Camiones disponibles");
-        getContentPane().add(lblcamionesdisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, -1, -1));
-
-        jcamionesdisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jcamionesdisponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 390, 134, -1));
-
-        btnasignar.setText("Asignar");
-        btnasignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnasignarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnasignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
+        getContentPane().add(btneliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-        guardarConductor();
-    }//GEN-LAST:event_btnactualizarActionPerformed
-
     private void btnagregarconductorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarconductorActionPerformed
-       idConductorSeleccionado = -1;
-      
-       btnactualizar.setText("Agregar Camión");
+        FormConductores form = new FormConductores(this, true, null);
+        form.setVisible(true);
+        cargarConductores();
     }//GEN-LAST:event_btnagregarconductorActionPerformed
 
-    private void btnasignarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignarcamionActionPerformed
-        cargarCamionesCombo();
-    }//GEN-LAST:event_btnasignarcamionActionPerformed
-
-    private void btnasignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignarActionPerformed
-       int fila = jTable1.getSelectedRow();
-
-        if (fila == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un conductor");
-            return;
-        }
-
-        int idConductor = (int) jTable1.getValueAt(fila, 0);
-
-        // Obtener ID del camión desde el combo
-        String seleccionado = jcamionesdisponibles.getSelectedItem().toString();
-        int idCamion = Integer.parseInt(seleccionado.split(" - ")[0]);
-
-        Dao.ConductorDao dao = new Dao.ConductorDao();
-        boolean resultado = dao.asignarCamion(idConductor, idCamion);
-
-        if (resultado) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Camión asignado correctamente");
-            cargarConductores();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al asignar camión");
-        }
-        lblcamionesdisponibles.setVisible(false);
-        jcamionesdisponibles.setVisible(false);
-        btnasignar.setVisible(false);
-    }//GEN-LAST:event_btnasignarActionPerformed
-
     private void btnmodificarconductorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarconductorActionPerformed
-       int fila = jTable1.getSelectedRow();
-
+        int fila = jTable1.getSelectedRow();
         if (fila == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero");
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un conductor");
             return;
         }
 
-        idConductorSeleccionado = (int) jTable1.getValueAt(fila, 0);
+        // Crear el objeto con los datos de la fila
+        modelo.Conductor seleccionado = new modelo.Conductor(
+                (int) jTable1.getValueAt(fila, 0), // ID
+                jTable1.getValueAt(fila, 1).toString(), // RUT
+                jTable1.getValueAt(fila, 2).toString(), // Nombre
+                jTable1.getValueAt(fila, 3).toString(), // Apellido
+                jTable1.getValueAt(fila, 4).toString(), // Licencia
+                jTable1.getValueAt(fila, 5).toString(), // Telefono
+                0 // ID Camión (puedes dejarlo en 0 si no se edita aquí)
+        );
 
-        
+        // Llamada al formulario (ahora los parámetros coinciden)
+        FormConductores form = new FormConductores(this, true, seleccionado);
+        form.setVisible(true);
 
-        txtRut.setText(jTable1.getValueAt(fila, 1).toString());
-        txtNombre.setText(jTable1.getValueAt(fila, 2).toString());
-        txtApellido.setText(jTable1.getValueAt(fila, 3).toString());
-        txtLicencia.setText(jTable1.getValueAt(fila, 4).toString());
-        txtTelefono.setText(jTable1.getValueAt(fila, 5).toString());
-
-        btnactualizar.setText("Guardar Cambios");
+        cargarConductores(); // Refrescar la tabla al cerrar
     }//GEN-LAST:event_btnmodificarconductorActionPerformed
 
     private void btneliminarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarcamionActionPerformed
@@ -336,34 +185,20 @@ public class VistaConductores extends javax.swing.JFrame {
         VistaMenuPrincipal vista = new VistaMenuPrincipal();
         vista.setVisible(true);
         this.dispose();
+        vista.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_volver;
-    private javax.swing.JButton btnactualizar;
     private javax.swing.JButton btnagregarconductor;
-    private javax.swing.JButton btnasignar;
-    private javax.swing.JButton btnasignarcamion;
     private javax.swing.JButton btneliminarcamion;
     private javax.swing.JButton btnmodificarconductor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> jcamionesdisponibles;
-    private javax.swing.JLabel lblApellido;
-    private javax.swing.JLabel lblLicencia;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblRut;
-    private javax.swing.JLabel lblTelefono;
-    private javax.swing.JLabel lblcamionesdisponibles;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtLicencia;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtRut;
-    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

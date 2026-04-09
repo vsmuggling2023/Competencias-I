@@ -4,7 +4,6 @@
  */
 package vista;
 
-import java.awt.HeadlessException;
 
 /**
  *
@@ -44,43 +43,7 @@ public class VistaUsuarios extends javax.swing.JFrame {
         }
     }
 
-    private void limpiarCampos() {
-        txtId.setText("");           // Limpia el campo ID
-        txtNombre.setText("");       // Limpia el nombre
-        txtCorreo.setText("");       // Limpia el correo
-        txtRol.setText("");          // Limpia el rol
 
-        idUsuarioSeleccionado = -1;  // Reinicia la variable de control (igual que en Camiones)
-        btnactualizar.setText("Actualizar"); // Restablece el texto del botón
-    }
-
-    private void guardarUsuario() {
-        try {
-            modelo.Usuario usuario = new modelo.Usuario();
-            usuario.setNombre(txtNombre.getText());
-            usuario.setEmail(txtCorreo.getText());
-            usuario.setTipo_usuario(txtRol.getText());
-
-            Dao.UsuariosDao dao = new Dao.UsuariosDao();
-            boolean resultado;
-
-            if (idUsuarioSeleccionado != -1) {
-                usuario.setId_usuario(idUsuarioSeleccionado);
-                resultado = dao.modificarUsuario(usuario);
-            } else {
-                resultado = dao.agregarUsuario(usuario);
-            }
-
-            if (resultado) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
-                cargarUsuarios();
-                idUsuarioSeleccionado = -1;
-                limpiarCampos();
-            }
-        } catch (HeadlessException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error en los datos");
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,21 +55,13 @@ public class VistaUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_volver = new javax.swing.JButton();
-        jpatente = new javax.swing.JLabel();
-        jmarca = new javax.swing.JLabel();
-        jmodelo = new javax.swing.JLabel();
-        janio = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtRol = new javax.swing.JTextField();
-        btnactualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -117,31 +72,7 @@ public class VistaUsuarios extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 20, -1, -1));
-
-        jpatente.setText("ID");
-        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 220, -1, -1));
-
-        jmarca.setText("Nombre");
-        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 270, -1, -1));
-
-        jmodelo.setText("Correo");
-        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 330, -1, -1));
-
-        janio.setText("Rol");
-        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 390, -1, -1));
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 270, 150, -1));
-        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 220, 150, -1));
-        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 330, 150, -1));
-        getContentPane().add(txtRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 390, 150, -1));
-
-        btnactualizar.setText("Actualizar");
-        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnactualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 450, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,27 +89,52 @@ public class VistaUsuarios extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 800, 499));
 
-        jButton1.setText("Modificar Usuario");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, -1, -1));
-
-        jButton2.setText("Agregar Usuario");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, -1, -1));
-
-        jButton3.setText("Eliminar Usuario");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar Usuario");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 570, -1, -1));
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, -1, -1));
+
+        btnAgregar.setText("Agregar Usuario");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, -1, -1));
+
+        btnEliminar.setText("Eliminar Usuario");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 570, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 720));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
+
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 220, 70, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int fila = jTable1.getSelectedRow();
         if (fila == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla");
@@ -197,38 +153,60 @@ public class VistaUsuarios extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar");
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-        guardarUsuario();
-    }//GEN-LAST:event_btnactualizarActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
         VistaMenuPrincipal vista = new VistaMenuPrincipal();
         vista.setVisible(true);
         this.dispose();
+        vista.setLocationRelativeTo(null);
+        cargarUsuarios();
     }//GEN-LAST:event_btn_volverActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        FormUsuario form = new FormUsuario(this, true, null);
+        form.setLocationRelativeTo(null); // Asegura que aparezca al centro
+        form.setVisible(true);
+        cargarUsuarios();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla primero");
+            return;
+        }
+
+        // Obtener los datos de la fila seleccionada
+        int id = (int) jTable1.getValueAt(fila, 0);
+        String nombre = jTable1.getValueAt(fila, 1).toString();
+        String correo = jTable1.getValueAt(fila, 2).toString();
+        String rol = jTable1.getValueAt(fila, 3).toString();
+
+        // Crear el objeto usuario para pasar al formulario
+        modelo.Usuario seleccionado = new modelo.Usuario(id, nombre, correo, rol);
+
+        // Abrir formulario en modo "Modificar"
+        FormUsuario form = new FormUsuario(this, true, seleccionado);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+
+       
+        cargarUsuarios();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JButton btnactualizar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel janio;
-    private javax.swing.JLabel jmarca;
-    private javax.swing.JLabel jmodelo;
-    private javax.swing.JLabel jpatente;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtRol;
     // End of variables declaration//GEN-END:variables
 }

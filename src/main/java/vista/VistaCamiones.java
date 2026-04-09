@@ -17,46 +17,12 @@ public class VistaCamiones extends javax.swing.JFrame {
      */
     public VistaCamiones() {
         initComponents();
-        cestado.removeAllItems();
-        cestado.addItem("Disponible");
-        cestado.addItem("Mantenimiento");
-        cargarCamiones();
         setTitle("Gestión de Camiones");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         cargarCamiones();
     }
     private int idCamionSeleccionado = -1;
-
-    private void mostrarFormulario(boolean esModificar) {
-        jpatente.setVisible(true);
-        jmarca.setVisible(true);
-        jmodelo.setVisible(true);
-        janio.setVisible(true);
-
-        txtpatente.setVisible(true);
-        txtmarca.setVisible(true);
-        txtmodelo.setVisible(true);
-        txtanio.setVisible(true);
-
-        // SOLO en modificar
-        jkilometros.setVisible(esModificar);
-        txtkilometros.setVisible(esModificar);
-
-        // Estado solo en modificar
-        cestado.setVisible(esModificar);
-        jestado.setVisible(esModificar); // label "Estado"
-
-        btnactualizar.setVisible(true);
-
-        if (!esModificar) {
-            txtpatente.setText("");
-            txtmarca.setText("");
-            txtmodelo.setText("");
-            txtanio.setText("");
-            txtkilometros.setText("");
-        }
-    }
 
     private void cargarCamiones() {
         Dao.CamionesDao dao = new Dao.CamionesDao();
@@ -79,48 +45,6 @@ public class VistaCamiones extends javax.swing.JFrame {
         }
     }
 
-    private void guardarCamion() {
-        try {
-            modelo.Camion camion = new modelo.Camion();
-
-            camion.setPatente(txtpatente.getText());
-            camion.setMarca(txtmarca.getText());
-            camion.setModelo(txtmodelo.getText());
-            camion.setAnio(Integer.parseInt(txtanio.getText()));
-
-            camion.setEstado(modelo.Camion.Estado.valueOf(cestado.getSelectedItem().toString()));
-
-            Dao.CamionesDao dao = new Dao.CamionesDao();
-
-            boolean resultado;
-
-            if (idCamionSeleccionado != -1) {
-                // MODIFICAR
-                camion.setId_camion(idCamionSeleccionado);
-                camion.setKilometro_acumulado(Float.parseFloat(txtkilometros.getText()));
-
-                resultado = dao.modificarCamion(camion);
-            } else {
-                // AGREGAR
-                resultado = dao.agregarCamion(camion);
-            }
-
-            if (resultado) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Operación exitosa");
-                cargarCamiones();
-
-                idCamionSeleccionado = -1;
-                btnactualizar.setText("Actualizar");
-
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error en la operación");
-            }
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos");
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,20 +59,7 @@ public class VistaCamiones extends javax.swing.JFrame {
         btn_eliminarcamion = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jpatente = new javax.swing.JLabel();
-        jmarca = new javax.swing.JLabel();
-        jmodelo = new javax.swing.JLabel();
-        janio = new javax.swing.JLabel();
-        jkilometros = new javax.swing.JLabel();
-        txtmarca = new javax.swing.JTextField();
-        txtpatente = new javax.swing.JTextField();
-        txtmodelo = new javax.swing.JTextField();
-        txtanio = new javax.swing.JTextField();
-        txtkilometros = new javax.swing.JTextField();
-        btnactualizar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
-        cestado = new javax.swing.JComboBox<>();
-        jestado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -193,51 +104,16 @@ public class VistaCamiones extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 750, 499));
 
-        jpatente.setText("Patente");
-        getContentPane().add(jpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, -1, -1));
-
-        jmarca.setText("Marca");
-        getContentPane().add(jmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 250, -1, -1));
-
-        jmodelo.setText("Modelo");
-        getContentPane().add(jmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 290, -1, -1));
-
-        janio.setText("Año");
-        getContentPane().add(janio, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 330, -1, -1));
-
-        jkilometros.setText("Kilometros Acumulados");
-        getContentPane().add(jkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 370, 130, -1));
-        getContentPane().add(txtmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 250, 150, -1));
-        getContentPane().add(txtpatente, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 210, 150, -1));
-        getContentPane().add(txtmodelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 290, 150, -1));
-        getContentPane().add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 330, 150, -1));
-        getContentPane().add(txtkilometros, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 370, 150, -1));
-
-        btnactualizar.setText("Actualizar");
-        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnactualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 470, -1, -1));
-
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 20, -1, -1));
-
-        cestado.setEditable(true);
-        cestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 150, -1));
-
-        jestado.setText("Estado");
-        getContentPane().add(jestado, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 410, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondoo.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 700));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -274,40 +150,40 @@ public class VistaCamiones extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_eliminarcamionActionPerformed
 
     private void btn_agregarcamionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarcamionesActionPerformed
-        idCamionSeleccionado = -1;
-        mostrarFormulario(false);
-        btnactualizar.setText("Agregar Camión");
+        FormCamiones form = new FormCamiones(this, true, null); // null indica nuevo
+        form.setVisible(true);
+        cargarCamiones();
     }//GEN-LAST:event_btn_agregarcamionesActionPerformed
-
-    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-        guardarCamion();
-    }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void btn_modificarcamionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarcamionActionPerformed
         int fila = jTable1.getSelectedRow();
-
         if (fila == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero");
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un camión");
             return;
         }
 
-        idCamionSeleccionado = (int) jTable1.getValueAt(fila, 0);
+        // Crear objeto Camion con los datos de la fila seleccionada
+        modelo.Camion seleccionado = new modelo.Camion(
+                (int) jTable1.getValueAt(fila, 0), // id
+                jTable1.getValueAt(fila, 1).toString(), // patente
+                jTable1.getValueAt(fila, 2).toString(), // marca
+                jTable1.getValueAt(fila, 3).toString(), // modelo
+                (int) jTable1.getValueAt(fila, 4), // anio
+                (float) jTable1.getValueAt(fila, 5), // kilometraje
+                modelo.Camion.Estado.valueOf(jTable1.getValueAt(fila, 6).toString()) // estado
+        );
 
-        mostrarFormulario(true);
+        FormCamiones form = new FormCamiones(this, true, seleccionado);
+        form.setVisible(true);
+        cargarCamiones(); // Refrescar tabla
 
-        txtpatente.setText(jTable1.getValueAt(fila, 1).toString());
-        txtmarca.setText(jTable1.getValueAt(fila, 2).toString());
-        txtmodelo.setText(jTable1.getValueAt(fila, 3).toString());
-        txtanio.setText(jTable1.getValueAt(fila, 4).toString());
-        txtkilometros.setText(jTable1.getValueAt(fila, 5).toString());
-
-        btnactualizar.setText("Guardar Cambios");
     }//GEN-LAST:event_btn_modificarcamionActionPerformed
 
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
         VistaMenuPrincipal vista = new VistaMenuPrincipal();
         vista.setVisible(true);
         this.dispose();
+        vista.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
     /**
@@ -319,21 +195,8 @@ public class VistaCamiones extends javax.swing.JFrame {
     private javax.swing.JButton btn_eliminarcamion;
     private javax.swing.JButton btn_modificarcamion;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JButton btnactualizar;
-    private javax.swing.JComboBox<String> cestado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel janio;
-    private javax.swing.JLabel jestado;
-    private javax.swing.JLabel jkilometros;
-    private javax.swing.JLabel jmarca;
-    private javax.swing.JLabel jmodelo;
-    private javax.swing.JLabel jpatente;
-    private javax.swing.JTextField txtanio;
-    private javax.swing.JTextField txtkilometros;
-    private javax.swing.JTextField txtmarca;
-    private javax.swing.JTextField txtmodelo;
-    private javax.swing.JTextField txtpatente;
     // End of variables declaration//GEN-END:variables
 }
