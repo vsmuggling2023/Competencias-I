@@ -149,7 +149,7 @@ public class FormUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-try {
+        try {
         // 1. Capturar datos de los campos de texto
         String nombre = txtNombre.getText().trim();
         String correo = txtCorreo.getText().trim();
@@ -199,21 +199,7 @@ try {
     /**
      * @param args the command line arguments
      */
-public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            // Se agrega 'null' como tercer parámetro para el objeto Usuario
-            FormUsuario dialog = new FormUsuario(new javax.swing.JFrame(), true, null);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
-        }
-    });
-}
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
