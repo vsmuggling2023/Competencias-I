@@ -41,20 +41,30 @@ public class ConductorDao {
     }
 
     public boolean agregarConductor(Conductor conductor) {
-        String sql = "INSERT INTO conductores (rut, nombre, apellido, tipo_licencia, telefono) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        String sqlCheck = "SELECT COUNT(*) FROM conductores WHERE rut = ?";
+        String sqlInsert = "INSERT INTO conductores (rut, nombre, apellido, tipo_licencia, telefono) VALUES (?, ?, ?, ?, ?)";
 
-            ps.setString(1, conductor.getRut());
-            ps.setString(2, conductor.getNombre());
-            ps.setString(3, conductor.getApellido());
-            ps.setString(4, conductor.getTipo_licencia());
-            ps.setString(5, conductor.getTelefono());
+        try (Connection conn = Conexion.getConnection()) {
 
-            return ps.executeUpdate() > 0;
+            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
+                psCheck.setString(1, conductor.getRut());
+                ResultSet rs = psCheck.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return false;
+                }
+            }
 
+            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
+                psInsert.setString(1, conductor.getRut());
+                psInsert.setString(2, conductor.getNombre());
+                psInsert.setString(3, conductor.getApellido());
+                psInsert.setString(4, conductor.getTipo_licencia());
+                psInsert.setString(5, conductor.getTelefono());
+                return psInsert.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al agregar el conductor: " + e.getMessage());
+            System.err.println("Error al agregar conductor: " + e.getMessage());
             return false;
         }
     }
@@ -94,15 +104,14 @@ public class ConductorDao {
         }
     }
 
-
     public boolean asignarCamion(int idConductor, int idCamion) {
-      
+
         String sqlGetAnterior = "SELECT id_camion FROM conductores WHERE id_conductor = ?";
-        
+
         String sqlLiberarAnterior = "UPDATE camiones SET estado = 'Disponible' WHERE id_camion = ?";
-       
+
         String sqlAsignarNuevo = "UPDATE conductores SET id_camion = ? WHERE id_conductor = ?";
-  
+
         String sqlMarcarAsignado = "UPDATE camiones SET estado = 'Asignado' WHERE id_camion = ?";
 
         try (Connection conn = Conexion.getConnection()) {

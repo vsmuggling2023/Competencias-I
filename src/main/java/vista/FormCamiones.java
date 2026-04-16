@@ -193,7 +193,7 @@ public class FormCamiones extends javax.swing.JDialog {
         c.setMarca(txtMarca.getText().trim());
         c.setModelo(txtModelo.getText().trim());
         c.setAnio(Integer.parseInt(txtAnio.getText().trim()));
-
+        c.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText().trim()));
         Dao.CamionesDao dao = new Dao.CamionesDao();
 
         // El formulario solo reacciona al resultado del DAO 

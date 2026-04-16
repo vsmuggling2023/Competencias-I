@@ -207,47 +207,25 @@ public class FormConductores extends javax.swing.JDialog {
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String rut = txtRut.getText();
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        String licencia = txtLicencia.getText();
-        String telefono = txtTelefono.getText();
-
-        // EXTRAER ID DEL CAMIÓN SELECCIONADO
-        int idCamionSeleccionado = 0;
-        String item = cbCamionesDisponibles.getSelectedItem().toString();
-        if (!item.equals("Sin Camión")) {
-            idCamionSeleccionado = Integer.parseInt(item.split(" - ")[0]);
-        }
+        modelo.Conductor con = new modelo.Conductor();
+        con.setRut(txtRut.getText().trim());
+        con.setNombre(txtNombre.getText().trim());
+        con.setApellido(txtApellido.getText().trim());
+        con.setTipo_licencia(txtLicencia.getText().trim());
+        con.setTelefono(txtTelefono.getText().trim());
 
         Dao.ConductorDao dao = new Dao.ConductorDao();
 
-        if (this.conductor == null) {
-            // MODO REGISTRAR
-            modelo.Conductor nuevo = new modelo.Conductor(0, rut, nombre, apellido, licencia, telefono, idCamionSeleccionado);
-            if (dao.agregarConductor(nuevo)) {
-                // Si seleccionó un camión, usamos el método asignarCamion que ya tienes en tu DAO
-                if (idCamionSeleccionado > 0) {
-                    // Necesitamos el ID del conductor que se acaba de crear (puedes obtenerlo listando el último o simplificarlo)
-                    // Para este ejercicio, asumiremos que se asigna después o mediante un trigger.
-                }
-                this.dispose();
-            }
+        // Lógica de respuesta
+        if (dao.agregarConductor(con)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Conductor registrado con éxito.");
+            this.dispose();
         } else {
-            // MODO ACTUALIZAR
-            this.conductor.setRut(rut);
-            this.conductor.setNombre(nombre);
-            this.conductor.setApellido(apellido);
-            this.conductor.setTipo_licencia(licencia);
-            this.conductor.setTelefono(telefono);
-
-            if (dao.modificarConductor(this.conductor)) {
-                // Si el camión cambió, usamos tu método asignarCamion del DAO
-                if (idCamionSeleccionado != this.conductor.getId_camion()) {
-                    dao.asignarCamion(this.conductor.getId_conductor(), idCamionSeleccionado);
-                }
-                this.dispose();
-            }
+            // ERROR: Rut duplicado (RF-02)
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: Ya existe un conductor registrado con el RUT " + con.getRut(),
+                    "RUT Duplicado",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

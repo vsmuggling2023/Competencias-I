@@ -17,6 +17,7 @@ import java.util.List;
  *
  * @author Santo Tomas
  */
+
 public class CamionesDao {
 
     public List<Camion> listarCamiones(Integer id, String patente, String marca, String modelo, Integer anio) {
@@ -43,33 +44,28 @@ public class CamionesDao {
     }
 
     public boolean agregarCamion(Camion camion) {
-       
-        String sqlCheck = "SELECT COUNT(*) FROM camiones WHERE patente = ?";
-        String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio) VALUES (?, ?, ?, ?)";
+  
+    String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio, kilometraje_acumulado) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = Conexion.getConnection()) {
-            // 1. Validar duplicado en el DAO 
-            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
-                psCheck.setString(1, camion.getPatente());
-                ResultSet rs = psCheck.executeQuery();
-                if (rs.next() && rs.getInt(1) > 0) {
-                    return false; // Retorna falso si ya existe 
-                }
-            }
+    try (Connection conn = Conexion.getConnection()) {
+  
 
+        try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
+            psInsert.setString(1, camion.getPatente());
+            psInsert.setString(2, camion.getMarca());
+            psInsert.setString(3, camion.getModelo());
+            psInsert.setInt(4, camion.getAnio());
+
+            psInsert.setFloat(5, camion.getKilometro_acumulado()); 
             
-            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
-                psInsert.setString(1, camion.getPatente());
-                psInsert.setString(2, camion.getMarca());
-                psInsert.setString(3, camion.getModelo());
-                psInsert.setInt(4, camion.getAnio());
-                return psInsert.executeUpdate() > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-            return false;
+            return psInsert.executeUpdate() > 0;
         }
+    } catch (SQLException e) {
+        System.err.println("Error: " + e.getMessage());
+        return false;
     }
+}
+    
 
     public boolean modificarCamion(Camion camion) {
         String sql = "UPDATE camiones SET patente = ?, marca = ?, modelo = ?, anio = ?, kilometraje_acumulado = ?, estado = ? WHERE id_camion = ?";
