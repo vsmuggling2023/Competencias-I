@@ -188,69 +188,24 @@ public class FormCamiones extends javax.swing.JDialog {
     }//GEN-LAST:event_txtModeloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       
-        try {
-            Dao.CamionesDao dao = new Dao.CamionesDao();
+        modelo.Camion c = new modelo.Camion();
+        c.setPatente(txtPatente.getText().trim());
+        c.setMarca(txtMarca.getText().trim());
+        c.setModelo(txtModelo.getText().trim());
+        c.setAnio(Integer.parseInt(txtAnio.getText().trim()));
 
-            // 1. Rescatar datos de los campos de la interfaz
-            String patente = txtPatente.getText().trim();
-            String marca = txtMarca.getText().trim();
-            String modeloCamion = txtModelo.getText().trim();
-            int anio = Integer.parseInt(txtAnio.getText().trim());
-            float km = Float.parseFloat(textKilometrosAcumulados.getText().trim());
+        Dao.CamionesDao dao = new Dao.CamionesDao();
 
-            // 2. Determinar el estado del camión
-            modelo.Camion.Estado estado;
-            if (this.camion == null) {
-                // Si es nuevo, por defecto queda en Disponible
-                estado = modelo.Camion.Estado.Disponible;
-            } else {
-                // Si estamos editando, leemos el valor seleccionado en el combo box
-                Object seleccionado = cbEstado.getSelectedItem();
-                if (seleccionado != null) {
-                    estado = modelo.Camion.Estado.valueOf(seleccionado.toString());
-                } else {
-                    // Si el combo estuviera vacío por error, mantenemos el estado actual
-                    estado = this.camion.getEstado();
-                }
-            }
-
-            // 3. Ejecutar la acción (Agregar o Modificar)
-            if (this.camion == null) {
-                // MODO AGREGAR
-                modelo.Camion nuevo = new modelo.Camion();
-                nuevo.setPatente(patente);
-                nuevo.setMarca(marca);
-                nuevo.setModelo(modeloCamion);
-                nuevo.setAnio(anio);
-                nuevo.setKilometro_acumulado(km);
-                nuevo.setEstado(estado);
-
-                if (dao.agregarCamion(nuevo)) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Camión registrado exitosamente");
-                }
-            } else {
-                // MODO MODIFICAR
-                this.camion.setPatente(patente);
-                this.camion.setMarca(marca);
-                this.camion.setModelo(modeloCamion);
-                this.camion.setAnio(anio);
-                this.camion.setKilometro_acumulado(km);
-                this.camion.setEstado(estado);
-
-                if (dao.modificarCamion(this.camion)) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Camión actualizado exitosamente");
-                }
-            }
-
-            this.dispose(); // Cerrar ventana tras la operación
-
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: El año y los kilómetros deben ser valores numéricos");
-        } catch (IllegalArgumentException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error en el estado seleccionado");
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
+        // El formulario solo reacciona al resultado del DAO 
+        if (dao.agregarCamion(c)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Camión registrado con éxito");
+            this.dispose();
+        } else {
+            // Mensaje de error si la patente ya existe (RF-02) 
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: El camión con esta patente ya se encuentra registrado.",
+                    "Camión Duplicado",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -265,7 +220,6 @@ public class FormCamiones extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;

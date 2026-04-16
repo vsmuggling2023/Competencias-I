@@ -96,6 +96,7 @@ public class VistaCamiones extends javax.swing.JFrame {
     private void initComponents() {
 
         btnVerHistorial = new javax.swing.JButton();
+        btnAddKilometraje = new javax.swing.JButton();
         btnMantenimiento1 = new javax.swing.JButton();
         btn_modificarcamion = new javax.swing.JButton();
         btn_agregarcamiones = new javax.swing.JButton();
@@ -115,7 +116,16 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btnVerHistorialActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVerHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 490, 110, -1));
+        getContentPane().add(btnVerHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 500, 110, -1));
+
+        btnAddKilometraje.setBackground(new java.awt.Color(125, 106, 140));
+        btnAddKilometraje.setText("Agregar Kilometraje");
+        btnAddKilometraje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddKilometrajeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAddKilometraje, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 430, 140, -1));
 
         btnMantenimiento1.setBackground(new java.awt.Color(125, 106, 140));
         btnMantenimiento1.setText("Mantenimiento");
@@ -267,7 +277,6 @@ public class VistaCamiones extends javax.swing.JFrame {
             int id = (int) jTable1.getValueAt(fila, 0);
             String patente = jTable1.getValueAt(fila, 1).toString();
 
-            
             FormHistorialMantenimiento vh = new FormHistorialMantenimiento(this, true, id, patente);
             vh.setVisible(true);
         } else {
@@ -278,11 +287,10 @@ public class VistaCamiones extends javax.swing.JFrame {
     private void btnMantenimiento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimiento1ActionPerformed
         int fila = jTable1.getSelectedRow();
         if (fila != -1) {
-            
+
             int idCamion = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
             String patente = jTable1.getValueAt(fila, 1).toString();
 
-            
             FormMantenimiento fm = new FormMantenimiento(this, true, idCamion, patente);
             fm.setVisible(true);
         } else {
@@ -290,11 +298,25 @@ public class VistaCamiones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMantenimiento1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnAddKilometrajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKilometrajeActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila != -1) {
+            int id = (int) jTable1.getValueAt(fila, 0);
+            String patente = jTable1.getValueAt(fila, 1).toString();
 
+            FormRegistrarKilometraje frm = new FormRegistrarKilometraje(this, true, id, patente);
+            frm.setVisible(true);
+            cargarCamiones(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un camión.");
+        }
+    }//GEN-LAST:event_btnAddKilometrajeActionPerformed
+
+    /**
+         * @param args the command line arguments
+         */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddKilometraje;
     private javax.swing.JButton btnMantenimiento1;
     private javax.swing.JButton btnVerHistorial;
     private javax.swing.JButton btn_agregarcamiones;

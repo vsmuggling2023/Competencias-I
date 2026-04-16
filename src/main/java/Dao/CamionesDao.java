@@ -43,19 +43,30 @@ public class CamionesDao {
     }
 
     public boolean agregarCamion(Camion camion) {
-        String sql = "INSERT INTO camiones (patente, marca, modelo, anio) VALUES (?, ?, ?, ?)";
+       
+        String sqlCheck = "SELECT COUNT(*) FROM camiones WHERE patente = ?";
+        String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection()) {
+            // 1. Validar duplicado en el DAO 
+            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
+                psCheck.setString(1, camion.getPatente());
+                ResultSet rs = psCheck.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return false; // Retorna falso si ya existe 
+                }
+            }
 
-            ps.setString(1, camion.getPatente());
-            ps.setString(2, camion.getMarca());
-            ps.setString(3, camion.getModelo());
-            ps.setInt(4, camion.getAnio());
-
-            return ps.executeUpdate() > 0;
-
+            
+            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
+                psInsert.setString(1, camion.getPatente());
+                psInsert.setString(2, camion.getMarca());
+                psInsert.setString(3, camion.getModelo());
+                psInsert.setInt(4, camion.getAnio());
+                return psInsert.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al agregar el camión: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
             return false;
         }
     }

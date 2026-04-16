@@ -59,17 +59,17 @@ public class FormHistorialMantenimiento extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Fecha", "Descripcion", "Costo"
+                "Id", "Fecha", "Descripcion", "Costo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
