@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
  *
  * @author Santo Tomas
  */
-
 public class VistaCamiones extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCamiones.class.getName());
@@ -96,7 +95,8 @@ public class VistaCamiones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnMantenimiento = new javax.swing.JButton();
+        btnVerHistorial = new javax.swing.JButton();
+        btnMantenimiento1 = new javax.swing.JButton();
         btn_modificarcamion = new javax.swing.JButton();
         btn_agregarcamiones = new javax.swing.JButton();
         btn_eliminarcamion = new javax.swing.JButton();
@@ -108,14 +108,23 @@ public class VistaCamiones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMantenimiento.setBackground(new java.awt.Color(125, 106, 140));
-        btnMantenimiento.setText("Mantenimiento");
-        btnMantenimiento.addActionListener(new java.awt.event.ActionListener() {
+        btnVerHistorial.setBackground(new java.awt.Color(125, 106, 140));
+        btnVerHistorial.setText("Ver detalles");
+        btnVerHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMantenimientoActionPerformed(evt);
+                btnVerHistorialActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, 120, -1));
+        getContentPane().add(btnVerHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 490, 110, -1));
+
+        btnMantenimiento1.setBackground(new java.awt.Color(125, 106, 140));
+        btnMantenimiento1.setText("Mantenimiento");
+        btnMantenimiento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenimiento1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMantenimiento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, 120, -1));
 
         btn_modificarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btn_modificarcamion.setText("Modificar Camión");
@@ -176,7 +185,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FONDOAHORASI.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
@@ -252,28 +261,42 @@ public class VistaCamiones extends javax.swing.JFrame {
         vista.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
-    private void btnMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimientoActionPerformed
+    private void btnVerHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerHistorialActionPerformed
         int fila = jTable1.getSelectedRow();
         if (fila != -1) {
-            // Sacamos el ID y la Patente de la fila seleccionada
+            int id = (int) jTable1.getValueAt(fila, 0);
+            String patente = jTable1.getValueAt(fila, 1).toString();
+
+            
+            FormHistorialMantenimiento vh = new FormHistorialMantenimiento(this, true, id, patente);
+            vh.setVisible(true);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un camión primero, waxín");
+        }
+    }//GEN-LAST:event_btnVerHistorialActionPerformed
+
+    private void btnMantenimiento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimiento1ActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila != -1) {
+            
             int idCamion = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
             String patente = jTable1.getValueAt(fila, 1).toString();
 
-            // Abrimos el formulario pasando esos datos
+            
             FormMantenimiento fm = new FormMantenimiento(this, true, idCamion, patente);
             fm.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione un camión de la tabla primero");
         }
-    
-    }//GEN-LAST:event_btnMantenimientoActionPerformed
+    }//GEN-LAST:event_btnMantenimiento1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMantenimiento;
+    private javax.swing.JButton btnMantenimiento1;
+    private javax.swing.JButton btnVerHistorial;
     private javax.swing.JButton btn_agregarcamiones;
     private javax.swing.JButton btn_eliminarcamion;
     private javax.swing.JButton btn_modificarcamion;
