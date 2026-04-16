@@ -20,7 +20,11 @@ public class VistaCamiones extends javax.swing.JFrame {
         setTitle("Gestión de Camiones");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargarCamiones();
+        RenderAlertaMantenimiento render = new RenderAlertaMantenimiento();
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(render);
+            cargarCamiones();
+        }
     }
     private int idCamionSeleccionado = -1;
 
@@ -42,6 +46,41 @@ public class VistaCamiones extends javax.swing.JFrame {
                 c.getKilometro_acumulado(),
                 c.getEstado()
             });
+        }
+    }
+    // Renderizador personalizado para resaltar alertas de mantenimiento
+
+    class RenderAlertaMantenimiento extends javax.swing.table.DefaultTableCellRenderer {
+
+        @Override
+        public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Obtenemos el kilometraje de la columna índice 5 (Kilometros Acumulado)
+            try {
+                float km = Float.parseFloat(table.getValueAt(row, 5).toString());
+
+                if (km >= 5000) {
+                    c.setBackground(new java.awt.Color(255, 51, 51)); // Rojo para alerta
+                    c.setForeground(java.awt.Color.WHITE); // Texto blanco para que se lea bien
+                } else {
+                    // Volver a los colores oscuros de tu interfaz original
+                    c.setBackground(new java.awt.Color(33, 32, 35));
+                    c.setForeground(java.awt.Color.WHITE);
+                }
+            } catch (Exception e) {
+                // En caso de error, mantener colores por defecto
+            }
+
+            // Si la fila está seleccionada, mantener el color de selección del sistema
+            if (isSelected) {
+                c.setBackground(table.getSelectionBackground());
+                c.setForeground(table.getSelectionForeground());
+            }
+
+            return c;
         }
     }
 
