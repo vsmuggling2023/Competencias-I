@@ -101,13 +101,36 @@ public class CamionesDao {
     }
 
     public boolean eliminarCamion(int id) {
-        String sql = "DELETE FROM camiones WHERE id_camion = ?";
+        String sqlKilometraje = "DELETE FROM kilometraje WHERE id_camion = ?";
+        String sqlMantenimientos = "DELETE FROM mantenimientos WHERE id_camion = ?";
+        String sqlCamion = "DELETE FROM camiones WHERE id_camion = ?";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection()) {
 
-            ps.setInt(1, id);
+            conn.setAutoCommit(false);
 
-            return ps.executeUpdate() > 0;
+            try (PreparedStatement ps1 = conn.prepareStatement(sqlKilometraje); PreparedStatement ps2 = conn.prepareStatement(sqlMantenimientos); PreparedStatement ps3 = conn.prepareStatement(sqlCamion)) {
+
+                // 1. hijos primero
+                ps1.setInt(1, id);
+                ps1.executeUpdate();
+
+                ps2.setInt(1, id);
+                ps2.executeUpdate();
+
+                // 2. padre al final
+                ps3.setInt(1, id);
+                int filas = ps3.executeUpdate();
+
+                conn.commit();
+
+                return filas > 0;
+
+            } catch (SQLException e) {
+                conn.rollback();
+                System.err.println("Error en transacción: " + e.getMessage());
+                return false;
+            }
 
         } catch (SQLException e) {
             System.err.println("Error al eliminar el camión: " + e.getMessage());
