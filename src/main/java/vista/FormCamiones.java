@@ -21,22 +21,33 @@ public class FormCamiones extends javax.swing.JDialog {
         cbEstado.addItem("Disponible");
         cbEstado.addItem("Mantenimiento");
         cbEstado.addItem("Asignado"); // Agregamos este porque existe en tu base de datos
+        this.camionSeleccionado = camion; // Aquí se asigna el valor
+
         if (camion != null) {
-            // Modo MODIFICAR: Cargar datos en los campos
-            cbEstado.setSelectedItem(camion.getEstado().name());
             this.setTitle("Modificar Camión");
-            txtPatente.setText(camion.getPatente());
-            txtMarca.setText(camion.getMarca());
-            txtModelo.setText(camion.getModelo());
-            txtAnio.setText(String.valueOf(camion.getAnio()));
-            textKilometrosAcumulados.setText(String.valueOf(camion.getKilometro_acumulado()));
-            btnGuardar.setText("Actualizar");
+            cargarDatosParaEditar();
         } else {
-            // Modo AGREGAR: Campos vacíos
-            this.setTitle("Nuevo Camión");
-            btnGuardar.setText("Guardar");
+            this.setTitle("Agregar Nuevo Camión");
+        }
+        this.setLocationRelativeTo(parent);
+    }
+
+    private void cargarDatosParaEditar() {
+
+        if (this.camionSeleccionado != null) {
+            txtPatente.setText(this.camionSeleccionado.getPatente());
+            txtMarca.setText(this.camionSeleccionado.getMarca());
+            txtModelo.setText(this.camionSeleccionado.getModelo());
+            txtAnio.setText(String.valueOf(this.camionSeleccionado.getAnio()));
+
+            textKilometrosAcumulados.setText(String.valueOf(this.camionSeleccionado.getKilometro_acumulado()));
+
+            txtPatente.setEditable(false);
+            textKilometrosAcumulados.setEditable(true);
         }
     }
+
+    private modelo.Camion camionSeleccionado;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -188,24 +199,40 @@ public class FormCamiones extends javax.swing.JDialog {
     }//GEN-LAST:event_txtModeloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        modelo.Camion c = new modelo.Camion();
-        c.setPatente(txtPatente.getText().trim());
-        c.setMarca(txtMarca.getText().trim());
-        c.setModelo(txtModelo.getText().trim());
-        c.setAnio(Integer.parseInt(txtAnio.getText().trim()));
-        c.setKilometro_acumulado(Float.parseFloat(textKilometrosAcumulados.getText().trim()));
-        Dao.CamionesDao dao = new Dao.CamionesDao();
+        try {
+            modelo.Camion c = new modelo.Camion();
+            c.setPatente(txtPatente.getText().trim());
+            c.setMarca(txtMarca.getText().trim());
+            c.setModelo(txtModelo.getText().trim());
+            c.setAnio(Integer.parseInt(txtAnio.getText().trim()));
 
-        // El formulario solo reacciona al resultado del DAO 
-        if (dao.agregarCamion(c)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Camión registrado con éxito");
-            this.dispose();
-        } else {
-            // Mensaje de error si la patente ya existe (RF-02) 
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error: El camión con esta patente ya se encuentra registrado.",
-                    "Camión Duplicado",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            float km = Float.parseFloat(textKilometrosAcumulados.getText().trim());
+            c.setKilometro_acumulado(km);
+
+            Dao.CamionesDao dao = new Dao.CamionesDao();
+
+            if (this.camionSeleccionado == null) {
+                // MODO AGREGAR
+                c.setEstado(modelo.Camion.Estado.Disponible);
+                dao.agregarCamion(c);
+            } else {
+                // MODO EDITAR
+                c.setId_camion(this.camionSeleccionado.getId_camion());
+
+                // Si quieres que el estado se mantenga según el ComboBox:
+                // c.setEstado(modelo.Camion.Estado.valueOf(cbEstado.getSelectedItem().toString()));
+                // O si prefieres mantener el estado previo:
+                c.setEstado(this.camionSeleccionado.getEstado());
+
+                if (dao.modificarCamion(c)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Modificado con éxito");
+                    this.dispose();
+
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

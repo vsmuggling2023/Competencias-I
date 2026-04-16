@@ -216,17 +216,6 @@ public class FormConductores extends javax.swing.JDialog {
 
         Dao.ConductorDao dao = new Dao.ConductorDao();
 
-        // Lógica de respuesta
-        if (dao.agregarConductor(con)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Conductor registrado con éxito.");
-            this.dispose();
-        } else {
-            // ERROR: Rut duplicado (RF-02)
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error: Ya existe un conductor registrado con el RUT " + con.getRut(),
-                    "RUT Duplicado",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed

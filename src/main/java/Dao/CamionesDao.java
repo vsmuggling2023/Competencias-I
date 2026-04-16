@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author Santo Tomas
  */
-
 public class CamionesDao {
 
     public List<Camion> listarCamiones(Integer id, String patente, String marca, String modelo, Integer anio) {
@@ -44,50 +43,46 @@ public class CamionesDao {
     }
 
     public boolean agregarCamion(Camion camion) {
-  
-    String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio, kilometraje_acumulado) VALUES (?, ?, ?, ?, ?)";
 
-    try (Connection conn = Conexion.getConnection()) {
-  
+        String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio, kilometraje_acumulado) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
-            psInsert.setString(1, camion.getPatente());
-            psInsert.setString(2, camion.getMarca());
-            psInsert.setString(3, camion.getModelo());
-            psInsert.setInt(4, camion.getAnio());
+        try (Connection conn = Conexion.getConnection()) {
 
-            psInsert.setFloat(5, camion.getKilometro_acumulado()); 
-            
-            return psInsert.executeUpdate() > 0;
+            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
+                psInsert.setString(1, camion.getPatente());
+                psInsert.setString(2, camion.getMarca());
+                psInsert.setString(3, camion.getModelo());
+                psInsert.setInt(4, camion.getAnio());
+
+                psInsert.setFloat(5, camion.getKilometro_acumulado());
+
+                return psInsert.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            return false;
         }
-    } catch (SQLException e) {
-        System.err.println("Error: " + e.getMessage());
-        return false;
     }
-}
-    
 
     public boolean modificarCamion(Camion camion) {
-        String sql = "UPDATE camiones SET patente = ?, marca = ?, modelo = ?, anio = ?, kilometraje_acumulado = ?, estado = ? WHERE id_camion = ?";
+        String sqlUpdate = "UPDATE camiones SET patente = ?, marca = ?, modelo = ?, anio = ?, kilometraje_acumulado = ?, estado = ? WHERE id_camion = ?";
 
-        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConnection(); PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
 
-            ps.setString(1, camion.getPatente());
-            ps.setString(2, camion.getMarca());
-            ps.setString(3, camion.getModelo());
-            ps.setInt(4, camion.getAnio());
-            ps.setFloat(5, camion.getKilometro_acumulado());
+            psUpdate.setString(1, camion.getPatente());
+            psUpdate.setString(2, camion.getMarca());
+            psUpdate.setString(3, camion.getModelo());
+            psUpdate.setInt(4, camion.getAnio());
 
-            // Estado (enum → String)
-            ps.setString(6, camion.getEstado().name());
+            // AQUÍ ESTÁ EL TRUCO: Pasamos el kilometraje que rescatamos en el formulario
+            psUpdate.setFloat(5, camion.getKilometro_acumulado());
 
-            // ID
-            ps.setInt(7, camion.getId_camion());
+            psUpdate.setString(6, camion.getEstado().name());
+            psUpdate.setInt(7, camion.getId_camion());
 
-            return ps.executeUpdate() > 0;
-
+            return psUpdate.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error al modificar el camión: " + e.getMessage());
+            System.err.println("Error al modificar: " + e.getMessage());
             return false;
         }
     }
