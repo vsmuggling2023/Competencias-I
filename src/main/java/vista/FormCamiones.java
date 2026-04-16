@@ -206,7 +206,6 @@ public class FormCamiones extends javax.swing.JDialog {
             c.setModelo(txtModelo.getText().trim());
             c.setAnio(Integer.parseInt(txtAnio.getText().trim()));
 
-
             float km = Float.parseFloat(textKilometrosAcumulados.getText().trim());
             c.setKilometro_acumulado(km);
 
@@ -215,24 +214,29 @@ public class FormCamiones extends javax.swing.JDialog {
             if (this.camionSeleccionado == null) {
                 // MODO AGREGAR
                 c.setEstado(modelo.Camion.Estado.Disponible);
-                dao.agregarCamion(c);
+                // AGREGAR VALIDACIÓN AQUÍ:
+                if (dao.agregarCamion(c)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Camión agregado con éxito");
+                    this.dispose();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error: La patente ya existe o no se pudo guardar");
+                }
             } else {
                 // MODO EDITAR
                 c.setId_camion(this.camionSeleccionado.getId_camion());
-
-                // Si quieres que el estado se mantenga según el ComboBox:
-                // c.setEstado(modelo.Camion.Estado.valueOf(cbEstado.getSelectedItem().toString()));
-                // O si prefieres mantener el estado previo:
                 c.setEstado(this.camionSeleccionado.getEstado());
 
                 if (dao.modificarCamion(c)) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Modificado con éxito");
                     this.dispose();
-
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error al intentar modificar");
                 }
             }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: Verifica que el año y los kilómetros sean números válidos");
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

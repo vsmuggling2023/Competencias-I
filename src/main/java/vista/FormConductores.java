@@ -28,6 +28,7 @@ public class FormConductores extends javax.swing.JDialog {
             txtApellido.setText(conductor.getApellido());
             txtLicencia.setText(conductor.getTipo_licencia());
             txtTelefono.setText(conductor.getTelefono());
+            txtRut.setEditable(false);
 
             // 2. Si el conductor ya tiene un camión asignado, lo seleccionamos en el ComboBox
             if (conductor.getId_camion() > 0) {
@@ -207,15 +208,41 @@ public class FormConductores extends javax.swing.JDialog {
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        modelo.Conductor con = new modelo.Conductor();
-        con.setRut(txtRut.getText().trim());
-        con.setNombre(txtNombre.getText().trim());
-        con.setApellido(txtApellido.getText().trim());
-        con.setTipo_licencia(txtLicencia.getText().trim());
-        con.setTelefono(txtTelefono.getText().trim());
+        try {
+            modelo.Conductor c = new modelo.Conductor();
+            c.setRut(txtRut.getText().trim());
+            c.setNombre(txtNombre.getText().trim());
+            c.setApellido(txtApellido.getText().trim());
+            c.setTelefono(txtTelefono.getText().trim());
+            c.setTipo_licencia(txtLicencia.getText().trim());
 
-        Dao.ConductorDao dao = new Dao.ConductorDao();
+            Dao.ConductorDao dao = new Dao.ConductorDao();
 
+            if (!txtRut.isEditable()) {
+                // MODO EDITAR: Necesitamos el ID original
+                c.setId_conductor(this.conductor.getId_conductor()); // <--- ESTO ES LO QUE FALTA
+
+                if (dao.modificarConductor(c)) {
+                    // Si seleccionaste un camión en el combo, lo asignamos aquí
+                    String item = cbCamionesDisponibles.getSelectedItem().toString();
+                    if (!item.equals("Sin Camión")) {
+                        int idCamion = Integer.parseInt(item.split(" - ")[0]);
+                        dao.asignarCamion(c.getId_conductor(), idCamion);
+                    }
+
+                    javax.swing.JOptionPane.showMessageDialog(this, "Datos actualizados");
+                    this.dispose();
+                }
+            } else {
+                // MODO AGREGAR
+                if (dao.agregarConductor(c)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Conductor guardado");
+                    this.dispose();
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed

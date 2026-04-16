@@ -44,16 +44,29 @@ public class CamionesDao {
 
     public boolean agregarCamion(Camion camion) {
 
+        
+
+        // 1. Consulta para ver si la patente ya existe
+        String sqlCheck = "SELECT COUNT(*) FROM camiones WHERE patente = ?";
         String sqlInsert = "INSERT INTO camiones (patente, marca, modelo, anio, kilometraje_acumulado) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexion.getConnection()) {
+            // Validación previa
+            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
+                psCheck.setString(1, camion.getPatente());
+                ResultSet rs = psCheck.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    System.err.println("Error: La patente ya está registrada.");
+                    return false; // Retorna falso si ya existe
+                }
+            }
 
+            // Si no existe, procede con el insert
             try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
                 psInsert.setString(1, camion.getPatente());
                 psInsert.setString(2, camion.getMarca());
                 psInsert.setString(3, camion.getModelo());
                 psInsert.setInt(4, camion.getAnio());
-
                 psInsert.setFloat(5, camion.getKilometro_acumulado());
 
                 return psInsert.executeUpdate() > 0;
