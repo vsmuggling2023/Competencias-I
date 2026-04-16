@@ -4,10 +4,13 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Santo Tomas
  */
+
 public class VistaCamiones extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCamiones.class.getName());
@@ -93,6 +96,7 @@ public class VistaCamiones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnMantenimiento = new javax.swing.JButton();
         btn_modificarcamion = new javax.swing.JButton();
         btn_agregarcamiones = new javax.swing.JButton();
         btn_eliminarcamion = new javax.swing.JButton();
@@ -104,6 +108,15 @@ public class VistaCamiones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnMantenimiento.setBackground(new java.awt.Color(125, 106, 140));
+        btnMantenimiento.setText("Mantenimiento");
+        btnMantenimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenimientoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, 120, -1));
+
         btn_modificarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btn_modificarcamion.setText("Modificar Camión");
         btn_modificarcamion.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +124,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_modificarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, -1, -1));
+        getContentPane().add(btn_modificarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 570, -1, -1));
 
         btn_agregarcamiones.setBackground(new java.awt.Color(125, 106, 140));
         btn_agregarcamiones.setText("Agregar Camión");
@@ -120,7 +133,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_agregarcamionesActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, -1, -1));
+        getContentPane().add(btn_agregarcamiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, -1, -1));
 
         btn_eliminarcamion.setBackground(new java.awt.Color(125, 106, 140));
         btn_eliminarcamion.setText("Eliminar Camión");
@@ -129,7 +142,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_eliminarcamionActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 570, -1, -1));
+        getContentPane().add(btn_eliminarcamion, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 570, -1, -1));
 
         jTable1.setBackground(new java.awt.Color(33, 32, 35));
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
@@ -163,7 +176,7 @@ public class VistaCamiones extends javax.swing.JFrame {
                 btn_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
+        getContentPane().add(btn_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FONDOAHORASI.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
@@ -239,11 +252,28 @@ public class VistaCamiones extends javax.swing.JFrame {
         vista.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
+    private void btnMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimientoActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila != -1) {
+            // Sacamos el ID y la Patente de la fila seleccionada
+            int idCamion = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+            String patente = jTable1.getValueAt(fila, 1).toString();
+
+            // Abrimos el formulario pasando esos datos
+            FormMantenimiento fm = new FormMantenimiento(this, true, idCamion, patente);
+            fm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un camión de la tabla primero");
+        }
+    
+    }//GEN-LAST:event_btnMantenimientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMantenimiento;
     private javax.swing.JButton btn_agregarcamiones;
     private javax.swing.JButton btn_eliminarcamion;
     private javax.swing.JButton btn_modificarcamion;
